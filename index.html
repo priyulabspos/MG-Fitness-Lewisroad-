@@ -848,7 +848,7 @@
             overflow: hidden;
             position: relative;
             box-shadow: var(--shadow-md);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             flex-direction: column;
         }
@@ -864,6 +864,7 @@
             aspect-ratio: 9 / 16;
             background: #111;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .reel-video-wrap video {
@@ -876,7 +877,7 @@
         .reel-overlay {
             position: absolute;
             inset: 0;
-            background: linear-gradient(180deg, rgba(0, 0, 0, 0.2) 0%, transparent 40%, rgba(0, 0, 0, 0.85) 100%);
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, transparent 35%, rgba(0, 0, 0, 0.88) 100%);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -889,56 +890,75 @@
             justify-content: space-between;
             align-items: center;
             pointer-events: auto;
+            width: 100%;
+            z-index: 6;
         }
 
-        .reel-badge {
-            background: rgba(255, 255, 255, 0.95);
+        .reel-audio-btn,
+        .reel-toggle-btn {
+            width: 44px;
+            height: 44px;
+            min-width: 44px;
+            min-height: 44px;
+            border-radius: 50%;
+            background: rgba(18, 18, 18, 0.72);
             backdrop-filter: blur(8px);
-            border: 1px solid rgba(237, 183, 30, 0.5);
-            color: var(--gold-dark);
-            font: 800 11px 'Barlow Condensed', sans-serif;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            padding: 4px 10px;
-            border-radius: 999px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            box-shadow: var(--shadow-sm);
-        }
-
-        .reel-badge::before {
-            content: '';
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #ef4444;
-            display: inline-block;
-            animation: blinkRed 1.2s infinite;
-        }
-
-        @keyframes blinkRed {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        .reel-audio-btn {
-            background: rgba(255, 255, 255, 0.85);
-            border: 1px solid var(--border);
-            color: #111;
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            display: flex;
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.2s ease, background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+            z-index: 6;
+            padding: 0;
         }
 
-        .reel-audio-btn:hover {
+        .reel-audio-btn:hover,
+        .reel-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            color: #111111;
+            border-color: rgba(255, 255, 255, 0.6);
+            transform: scale(1.06);
+        }
+
+        .reel-audio-btn:focus-visible,
+        .reel-toggle-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        .reel-audio-btn.unmuted {
             background: var(--gold);
+            color: #111111;
+            border-color: var(--gold);
+            box-shadow: 0 0 16px rgba(237, 183, 30, 0.6);
+        }
+
+        .reel-audio-btn.unmuted:hover {
+            background: var(--gold-dark, #d89f10);
             color: #000;
+        }
+
+        .reel-toggle-btn {
+            opacity: 0;
+            pointer-events: auto;
+        }
+
+        .reel-card:hover .reel-toggle-btn,
+        .reel-card:focus-within .reel-toggle-btn,
+        .reel-toggle-btn:focus-visible,
+        .reel-card.playing .reel-toggle-btn {
+            opacity: 1;
+        }
+
+        @media (hover: none), (max-width: 768px) {
+            .reel-toggle-btn {
+                opacity: 1;
+            }
         }
 
         .reel-bottom-info {
@@ -964,35 +984,59 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
+            min-width: 60px;
+            min-height: 60px;
             border-radius: 50%;
-            background: rgba(255, 255, 255, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #111;
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            color: #111111;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            transition: transform 0.2s ease, background 0.2s ease, opacity 0.25s ease, visibility 0.25s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+            z-index: 5;
+            padding: 0;
         }
 
         .reel-play-btn svg {
-            width: 22px;
-            height: 22px;
-            fill: #111;
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
             margin-left: 2px;
-        }
-
-        .reel-card.playing .reel-play-btn {
-            opacity: 0;
-            pointer-events: none;
         }
 
         .reel-card:hover .reel-play-btn {
             background: var(--gold);
-            color: #000;
+            color: #111111;
+            transform: translate(-50%, -50%) scale(1.08);
+        }
+
+        .reel-play-btn:focus-visible {
+            outline: 2px solid var(--gold);
+            outline-offset: 3px;
+        }
+
+        .reel-card.playing .reel-play-btn {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translate(-50%, -50%) scale(0.9);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reel-audio-btn,
+            .reel-toggle-btn,
+            .reel-play-btn,
+            .reel-card {
+                transition: none !important;
+                transform: none !important;
+            }
         }
 
         /* Programs Grid */
@@ -3402,11 +3446,14 @@
                 <!-- Reel 1 -->
                 <div class="reel-card" id="reel1">
                     <div class="reel-video-wrap">
-                        <video loop playsinline preload="metadata" src="reel-mgwinner-fullhd.mp4"></video>
+                        <video loop muted playsinline webkit-playsinline preload="metadata" poster="poster-reel1.jpg" src="reel-mgwinner-fullhd.mp4"></video>
                         <div class="reel-overlay">
                             <div class="reel-top-bar">
-                                <button class="reel-audio-btn" aria-label="Toggle Sound" onclick="toggleReelAudio(this)">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                                <button type="button" class="reel-audio-btn" aria-label="Unmute reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                </button>
+                                <button type="button" class="reel-toggle-btn" aria-label="Play reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                                 </button>
                             </div>
                             <div class="reel-bottom-info">
@@ -3414,20 +3461,23 @@
                                 <p>#bhubaneswar #workout #mgwinnergym</p>
                             </div>
                         </div>
-                        <div class="reel-play-btn" onclick="toggleReelPlay(this)">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
+                        <button type="button" class="reel-play-btn" aria-label="Play reel">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Reel 2 -->
                 <div class="reel-card" id="reel2">
                     <div class="reel-video-wrap">
-                        <video loop playsinline preload="metadata" src="reel-workout-motivation.mp4"></video>
+                        <video loop muted playsinline webkit-playsinline preload="metadata" poster="poster-reel2.jpg" src="reel-workout-motivation.mp4"></video>
                         <div class="reel-overlay">
                             <div class="reel-top-bar">
-                                <button class="reel-audio-btn" aria-label="Toggle Sound" onclick="toggleReelAudio(this)">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                                <button type="button" class="reel-audio-btn" aria-label="Unmute reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                </button>
+                                <button type="button" class="reel-toggle-btn" aria-label="Play reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                                 </button>
                             </div>
                             <div class="reel-bottom-info">
@@ -3435,20 +3485,23 @@
                                 <p>#workoutmotivation #bodybuilding</p>
                             </div>
                         </div>
-                        <div class="reel-play-btn" onclick="toggleReelPlay(this)">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
+                        <button type="button" class="reel-play-btn" aria-label="Play reel">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Reel 3 -->
                 <div class="reel-card" id="reel3">
                     <div class="reel-video-wrap">
-                        <video loop playsinline preload="metadata" src="reel-cardio-floor.mp4"></video>
+                        <video loop muted playsinline webkit-playsinline preload="metadata" poster="poster-reel3.jpg" src="reel-cardio-floor.mp4"></video>
                         <div class="reel-overlay">
                             <div class="reel-top-bar">
-                                <button class="reel-audio-btn" aria-label="Toggle Sound" onclick="toggleReelAudio(this)">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                                <button type="button" class="reel-audio-btn" aria-label="Unmute reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                </button>
+                                <button type="button" class="reel-toggle-btn" aria-label="Play reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                                 </button>
                             </div>
                             <div class="reel-bottom-info">
@@ -3456,20 +3509,23 @@
                                 <p>#gym #newversion #reelsindia</p>
                             </div>
                         </div>
-                        <div class="reel-play-btn" onclick="toggleReelPlay(this)">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
+                        <button type="button" class="reel-play-btn" aria-label="Play reel">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
                     </div>
                 </div>
 
                 <!-- Reel 4 -->
                 <div class="reel-card" id="reel4">
                     <div class="reel-video-wrap">
-                        <video loop playsinline preload="metadata" src="reel-gym-lifestyle.mp4"></video>
+                        <video loop muted playsinline webkit-playsinline preload="metadata" poster="poster-reel4.jpg" src="reel-gym-lifestyle.mp4"></video>
                         <div class="reel-overlay">
                             <div class="reel-top-bar">
-                                <button class="reel-audio-btn" aria-label="Toggle Sound" onclick="toggleReelAudio(this)">
-                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                                <button type="button" class="reel-audio-btn" aria-label="Unmute reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                </button>
+                                <button type="button" class="reel-toggle-btn" aria-label="Play reel" aria-pressed="false">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
                                 </button>
                             </div>
                             <div class="reel-bottom-info">
@@ -3477,9 +3533,9 @@
                                 <p>#gymlifestyle #mgwinnergym</p>
                             </div>
                         </div>
-                        <div class="reel-play-btn" onclick="toggleReelPlay(this)">
-                            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
+                        <button type="button" class="reel-play-btn" aria-label="Play reel">
+                            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -4045,38 +4101,191 @@
         });
 
         // Reel Video Controls (Play/Pause, Sound Toggle)
-        function toggleReelPlay(btn) {
-            const card = btn.closest('.reel-card');
-            const video = card.querySelector('video');
-            if (video.paused) {
-                // Pause other videos
-                $$('.reel-card video').forEach(v => {
-                    if (v !== video) {
-                        v.pause();
-                        v.closest('.reel-card').classList.remove('playing');
-                    }
-                });
-                video.play();
-                card.classList.add('playing');
-            } else {
-                video.pause();
-                card.classList.remove('playing');
+        // Workout Reels Video Player Controller
+        const REEL_SVG_MUTED = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>';
+        const REEL_SVG_UNMUTED = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>';
+        const REEL_SVG_PLAY = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+        const REEL_SVG_PAUSE = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>';
+
+        function syncPlayUI(card, video) {
+            if (!card || !video) return;
+            const isPlaying = !video.paused && !video.ended;
+            card.classList.toggle('playing', isPlaying);
+
+            const toggleBtn = card.querySelector('.reel-toggle-btn');
+            if (toggleBtn) {
+                toggleBtn.innerHTML = isPlaying ? REEL_SVG_PAUSE : REEL_SVG_PLAY;
+                toggleBtn.setAttribute('aria-label', isPlaying ? 'Pause reel' : 'Play reel');
+                toggleBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+            }
+
+            const playBtn = card.querySelector('.reel-play-btn');
+            if (playBtn) {
+                playBtn.setAttribute('aria-label', isPlaying ? 'Pause reel' : 'Play reel');
             }
         }
 
-        function toggleReelAudio(btn) {
-            const card = btn.closest('.reel-card');
-            const video = card.querySelector('video');
-            video.muted = !video.muted;
-            if (!video.muted) {
-                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>`;
-                btn.style.background = 'var(--gold)';
-                btn.style.color = '#000';
-            } else {
-                btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>`;
-                btn.style.background = 'rgba(255, 255, 255, 0.85)';
-                btn.style.color = '#111';
+        function syncAudioUI(card, video) {
+            if (!card || !video) return;
+            const audioBtn = card.querySelector('.reel-audio-btn');
+            if (!audioBtn) return;
+            const isUnmuted = !video.muted;
+            audioBtn.innerHTML = isUnmuted ? REEL_SVG_UNMUTED : REEL_SVG_MUTED;
+            audioBtn.classList.toggle('unmuted', isUnmuted);
+            audioBtn.setAttribute('aria-label', isUnmuted ? 'Mute reel' : 'Unmute reel');
+            audioBtn.setAttribute('aria-pressed', isUnmuted ? 'true' : 'false');
+        }
+
+        function playReelVideo(video) {
+            if (!video) return;
+            // Pause any other reel video before starting this one
+            document.querySelectorAll('.reel-card video').forEach(v => {
+                if (v !== video && !v.paused) {
+                    v.pause();
+                }
+            });
+
+            const playPromise = video.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    // Handled safely without console errors if playback aborted or not allowed
+                    const card = video.closest('.reel-card');
+                    if (card) syncPlayUI(card, video);
+                });
             }
+        }
+
+        function toggleReelPlay(el) {
+            const card = el ? (el.classList && el.classList.contains('reel-card') ? el : el.closest('.reel-card')) : null;
+            if (!card) return;
+            const video = card.querySelector('video');
+            if (!video) return;
+
+            if (video.paused) {
+                playReelVideo(video);
+            } else {
+                video.pause();
+            }
+        }
+
+        function toggleReelAudio(el) {
+            const card = el ? (el.classList && el.classList.contains('reel-card') ? el : el.closest('.reel-card')) : null;
+            if (!card) return;
+            const video = card.querySelector('video');
+            if (!video) return;
+
+            video.muted = !video.muted;
+        }
+
+        function initReelPlayers() {
+            const cards = document.querySelectorAll('.reel-card');
+            if (!cards.length) return;
+
+            cards.forEach(card => {
+                const video = card.querySelector('video');
+                const wrap = card.querySelector('.reel-video-wrap');
+                const audioBtn = card.querySelector('.reel-audio-btn');
+                const toggleBtn = card.querySelector('.reel-toggle-btn');
+                const playBtn = card.querySelector('.reel-play-btn');
+
+                if (!video) return;
+
+                // Sync initial states
+                syncPlayUI(card, video);
+                syncAudioUI(card, video);
+
+                // Video event listeners (Single source of truth)
+                video.addEventListener('play', () => {
+                    // Pause any other reel
+                    document.querySelectorAll('.reel-card video').forEach(v => {
+                        if (v !== video && !v.paused) {
+                            v.pause();
+                        }
+                    });
+                    syncPlayUI(card, video);
+                });
+
+                video.addEventListener('pause', () => {
+                    syncPlayUI(card, video);
+                });
+
+                video.addEventListener('ended', () => {
+                    syncPlayUI(card, video);
+                });
+
+                video.addEventListener('volumechange', () => {
+                    syncAudioUI(card, video);
+                });
+
+                // Audio button click
+                if (audioBtn) {
+                    audioBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleReelAudio(card);
+                    });
+                }
+
+                // Mini toggle button click
+                if (toggleBtn) {
+                    toggleBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleReelPlay(card);
+                    });
+                }
+
+                // Center play button click
+                if (playBtn) {
+                    playBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        toggleReelPlay(card);
+                    });
+                }
+
+                // Wrap / video surface tap: toggle play/pause (ignore clicks from buttons)
+                if (wrap) {
+                    wrap.addEventListener('click', (e) => {
+                        if (e.target.closest('button')) return;
+                        toggleReelPlay(card);
+                    });
+                }
+            });
+
+            // Pause reels when out of view (< 30% visible)
+            if ('IntersectionObserver' in window) {
+                const reelObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (!entry.isIntersecting || entry.intersectionRatio < 0.3) {
+                            const video = entry.target.querySelector('video');
+                            if (video && !video.paused) {
+                                video.pause();
+                            }
+                        }
+                    });
+                }, {
+                    threshold: [0, 0.3]
+                });
+
+                cards.forEach(card => reelObserver.observe(card));
+            }
+
+            // Pause reels on visibilitychange (tab switch / backgrounded)
+            document.addEventListener('visibilitychange', () => {
+                if (document.hidden) {
+                    cards.forEach(card => {
+                        const video = card.querySelector('video');
+                        if (video && !video.paused) {
+                            video.pause();
+                        }
+                    });
+                }
+            });
+        }
+
+        // Initialize players on load / DOM ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initReelPlayers);
+        } else {
+            initReelPlayers();
         }
 
         // Enquiry Modal
