@@ -756,6 +756,9 @@
         }
 
         /* Facility Cards Grid */
+        .fac-carousel-pagination {
+            display: none;
+        }
         .gl {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -2585,49 +2588,165 @@
                 line-height: 1.5 !important;
             }
 
-            /* --- Floor Photos 2-Column Clean Grid --- */
+            /* --- Floor Photos Swipe Carousel (Mobile Only) --- */
+            #facilities {
+                padding-bottom: 70px !important;
+            }
             .gl {
-                display: grid !important;
-                grid-template-columns: 1fr 1fr !important;
-                gap: 8px !important;
+                display: flex !important;
+                grid-template-columns: none !important;
+                overflow-x: auto !important;
+                overflow-y: hidden !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+                overscroll-behavior-x: contain !important;
+                gap: 12px !important;
+                padding-inline: 20px !important;
+                scroll-padding-inline: 20px !important;
+                margin-left: -20px !important;
+                margin-right: -20px !important;
+                width: calc(100% + 40px) !important;
+                scrollbar-width: none !important;
+                -ms-overflow-style: none !important;
+                touch-action: pan-x pan-y !important;
+                box-sizing: border-box !important;
+            }
+            .gl::-webkit-scrollbar {
+                display: none !important;
+                width: 0 !important;
+                height: 0 !important;
             }
             .card-fac {
-                border: 1px solid #e2d9c6 !important;
-                border-radius: 12px !important;
+                flex: 0 0 78% !important;
+                width: 78% !important;
+                scroll-snap-align: center !important;
+                scroll-snap-stop: always !important;
+                aspect-ratio: 4 / 5 !important;
+                border: 1px solid rgba(226, 217, 198, 0.85) !important;
+                border-radius: 16px !important;
                 overflow: hidden !important;
-                background: #fff !important;
-                box-shadow: none !important;
-                margin: 0 !important;
+                background: #ffffff !important;
+                position: relative !important;
                 cursor: pointer !important;
+                margin: 0 !important;
+                box-sizing: border-box !important;
+                transform: scale(0.96) !important;
+                opacity: 0.85 !important;
+                transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease !important;
+                box-shadow: 0 3px 12px rgba(27, 24, 18, 0.05) !important;
+            }
+            .card-fac.active-snap-card {
+                transform: scale(1) !important;
+                opacity: 1 !important;
+                box-shadow: 0 8px 24px rgba(27, 24, 18, 0.12) !important;
             }
             .card-fac-img {
+                width: 100% !important;
+                height: 100% !important;
                 aspect-ratio: 4 / 5 !important;
-                height: auto !important;
-                position: relative !important;
+                position: absolute !important;
+                inset: 0 !important;
                 overflow: hidden !important;
+                background: #1a1714 !important;
             }
             .card-fac-img img {
                 width: 100% !important;
                 height: 100% !important;
                 object-fit: cover !important;
-                border-radius: 11px 11px 0 0 !important;
+                border-radius: 16px !important;
+                display: block !important;
             }
             .card-fac-content {
-                padding: 8px !important;
+                position: absolute !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                padding: 28px 16px 16px 16px !important;
+                background: linear-gradient(180deg, transparent 0%, rgba(20, 18, 14, 0.5) 25%, rgba(20, 18, 14, 0.92) 100%) !important;
+                z-index: 2 !important;
+                pointer-events: none !important;
+                border-radius: 0 0 16px 16px !important;
+                display: flex !important;
+                flex-direction: column !important;
             }
             .card-fac-content h3 {
-                font-size: 14px !important;
-                margin-bottom: 2px !important;
+                font-size: 17px !important;
+                font-weight: 700 !important;
+                color: #ffffff !important;
+                margin: 0 0 4px 0 !important;
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7) !important;
                 white-space: nowrap !important;
                 overflow: hidden !important;
                 text-overflow: ellipsis !important;
             }
             .card-fac-content p {
-                display: none !important;
+                font-size: 13px !important;
+                color: rgba(255, 255, 255, 0.88) !important;
+                margin: 0 !important;
+                line-height: 1.45 !important;
+                display: -webkit-box !important;
+                -webkit-line-clamp: 2 !important;
+                -webkit-box-orient: vertical !important;
+                overflow: hidden !important;
+                text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7) !important;
             }
             .card-fac-content .badge {
-                font-size: 10px !important;
-                padding: 2px 6px !important;
+                display: none !important;
+            }
+
+            /* Pagination Dots (Mobile Only) */
+            .fac-carousel-pagination {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 4px !important;
+                margin-top: 14px !important;
+                padding-bottom: 6px !important;
+            }
+            .fac-dot {
+                width: 44px !important;
+                height: 44px !important;
+                min-width: 44px !important;
+                min-height: 44px !important;
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                cursor: pointer !important;
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            .fac-dot span {
+                display: block !important;
+                width: 8px !important;
+                height: 8px !important;
+                border-radius: 50% !important;
+                background: #d4ccb8 !important;
+                transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            }
+            .fac-dot.active-dot span {
+                background: var(--gold) !important;
+                width: 22px !important;
+                border-radius: 999px !important;
+                box-shadow: 0 0 10px rgba(237, 183, 30, 0.55) !important;
+            }
+            .fac-dot:focus-visible {
+                outline: 2px solid var(--gold) !important;
+                outline-offset: -2px !important;
+                border-radius: 8px !important;
+            }
+
+            @media (prefers-reduced-motion: reduce) {
+                .card-fac {
+                    transition: none !important;
+                    transform: none !important;
+                    opacity: 1 !important;
+                }
+                .fac-dot span {
+                    transition: none !important;
+                }
             }
 
             /* --- Facility Lightbox --- */
@@ -3389,7 +3508,7 @@
                 <!-- Facility 3: Dumbbell Rack -->
                 <div class="card-fac">
                     <div class="card-fac-img">
-                        <img src="gym-dumbbells.webp" alt="Full dumbbell rack up to heavy weights at MG Winner Fitness">
+                        <img src="gym-dumbbells.webp" loading="lazy" alt="Full dumbbell rack up to heavy weights at MG Winner Fitness">
                         </div>
                     <div class="card-fac-content">
                         <h3>Heavy Dumbbell Fleet</h3>
@@ -3400,7 +3519,7 @@
                 <!-- Facility 4: Spotting & Personal Coaching -->
                 <div class="card-fac">
                     <div class="card-fac-img">
-                        <img src="gym-coach-spotting.jpg" alt="Coach spotting member doing dumbbell press at MG Winner Fitness">
+                        <img src="gym-coach-spotting.jpg" loading="lazy" alt="Coach spotting member doing dumbbell press at MG Winner Fitness">
                         </div>
                     <div class="card-fac-content">
                         <h3>Guided Bench & Spotting</h3>
@@ -3411,7 +3530,7 @@
                 <!-- Facility 5: Community & Studio Floor -->
                 <div class="card-fac">
                     <div class="card-fac-img">
-                        <img src="gym-community.webp" alt="MG Winner Fitness group workout and community class in Bhubaneswar">
+                        <img src="gym-community.webp" loading="lazy" alt="MG Winner Fitness group workout and community class in Bhubaneswar">
                         </div>
                     <div class="card-fac-content">
                         <h3>Zumba & Aerobics Floor</h3>
@@ -3422,13 +3541,22 @@
                 <!-- Facility 6: Reception & Members Lounge -->
                 <div class="card-fac">
                     <div class="card-fac-img">
-                        <img src="gym-reception.webp" alt="Reception desk with MG Winner illuminated logo">
+                        <img src="gym-reception.webp" loading="lazy" alt="Reception desk with MG Winner illuminated logo">
                         </div>
                     <div class="card-fac-content">
                         <h3>Lounge & Nutrition Desk</h3>
                         <p>Seamless digital QR check-in, pre-workout hydration station, and post-workout nutritional consultation.</p>
                         </div>
                 </div>
+            </div>
+            <!-- Facility Carousel Pagination Dots (Mobile Only) -->
+            <div class="fac-carousel-pagination" aria-label="Floor photo carousel navigation">
+                <button type="button" class="fac-dot active-dot" aria-label="Go to photo 1" aria-current="true" data-index="0"><span></span></button>
+                <button type="button" class="fac-dot" aria-label="Go to photo 2" aria-current="false" data-index="1"><span></span></button>
+                <button type="button" class="fac-dot" aria-label="Go to photo 3" aria-current="false" data-index="2"><span></span></button>
+                <button type="button" class="fac-dot" aria-label="Go to photo 4" aria-current="false" data-index="3"><span></span></button>
+                <button type="button" class="fac-dot" aria-label="Go to photo 5" aria-current="false" data-index="4"><span></span></button>
+                <button type="button" class="fac-dot" aria-label="Go to photo 6" aria-current="false" data-index="5"><span></span></button>
             </div>
         </div>
     </section>
@@ -4738,24 +4866,108 @@
             }
             initProgramAccordion();
 
-            // Facility Photos Lightbox
+            // Facility Photos Carousel & Lightbox Controller (Mobile)
+            const glScroller = $('.gl');
+            const facCards = $$('.card-fac');
+            const facDots = $$('.fac-dot');
             const lightbox = $('#facilityLightbox');
             const lightboxImg = $('#facilityLightboxImg');
             const lightboxCaption = $('#facilityLightboxCaption');
             const lightboxClose = $('#facilityLightboxClose');
 
-            $$('.card-fac').forEach(card => {
-                card.addEventListener('click', () => {
-                    if (window.innerWidth <= 768 && lightbox && lightboxImg) {
-                        const img = card.querySelector('img');
-                        const h3 = card.querySelector('h3');
-                        if (img) lightboxImg.src = img.src;
-                        if (lightboxCaption && h3) lightboxCaption.textContent = h3.textContent;
-                        lightbox.classList.add('on');
-                        lightbox.setAttribute('aria-hidden', 'false');
-                    }
+            function updateActiveFacCard(index) {
+                if (index < 0 || index >= facCards.length) return;
+                facCards.forEach((c, i) => {
+                    c.classList.toggle('active-snap-card', i === index);
                 });
-            });
+                facDots.forEach((d, i) => {
+                    const isActive = i === index;
+                    d.classList.toggle('active-dot', isActive);
+                    d.setAttribute('aria-current', isActive ? 'true' : 'false');
+                });
+            }
+
+            if (glScroller && facCards.length) {
+                // Initialize first card active
+                updateActiveFacCard(0);
+
+                // IntersectionObserver for tracking active card during scroll
+                if ('IntersectionObserver' in window) {
+                    const facObserver = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+                                const idx = facCards.indexOf(entry.target);
+                                if (idx !== -1) {
+                                    updateActiveFacCard(idx);
+                                }
+                            }
+                        });
+                    }, {
+                        root: glScroller,
+                        threshold: 0.6
+                    });
+
+                    facCards.forEach(c => facObserver.observe(c));
+                }
+
+                // Dot navigation click
+                facDots.forEach(dot => {
+                    dot.addEventListener('click', () => {
+                        const idx = parseInt(dot.getAttribute('data-index'), 10);
+                        if (!isNaN(idx) && facCards[idx]) {
+                            const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                            facCards[idx].scrollIntoView({
+                                behavior: prefersReduced ? 'auto' : 'smooth',
+                                inline: 'center',
+                                block: 'nearest'
+                            });
+                            updateActiveFacCard(idx);
+                        }
+                    });
+                });
+
+                // Lightbox with swipe vs tap detection (ignore clicks if pointer moved > 8px)
+                facCards.forEach(card => {
+                    let startX = 0;
+                    let startY = 0;
+                    let moved = false;
+
+                    card.addEventListener('pointerdown', (e) => {
+                        startX = e.clientX;
+                        startY = e.clientY;
+                        moved = false;
+                    }, { passive: true });
+
+                    card.addEventListener('pointermove', (e) => {
+                        const dx = Math.abs(e.clientX - startX);
+                        const dy = Math.abs(e.clientY - startY);
+                        if (dx > 8 || dy > 8) {
+                            moved = true;
+                        }
+                    }, { passive: true });
+
+                    card.addEventListener('pointercancel', () => {
+                        moved = true;
+                    }, { passive: true });
+
+                    card.addEventListener('click', (e) => {
+                        if (moved) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            return;
+                        }
+                        if (window.innerWidth <= 768 && lightbox && lightboxImg) {
+                            const img = card.querySelector('img');
+                            const h3 = card.querySelector('h3');
+                            if (img) lightboxImg.src = img.src;
+                            if (lightboxCaption && h3) lightboxCaption.textContent = h3.textContent;
+                            lightbox.classList.add('on');
+                            lightbox.setAttribute('aria-hidden', 'false');
+                        }
+                    });
+                });
+            }
+
             if (lightboxClose && lightbox) {
                 lightboxClose.addEventListener('click', () => {
                     lightbox.classList.remove('on');
