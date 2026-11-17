@@ -2127,19 +2127,475 @@
         }
 
         /* Dashboard Hub */
+
+        /* ============================================================
+           GYM WEBSITE CONTENT MANAGEMENT DASHBOARD (CMS)
+           ============================================================ */
         #dash {
             position: fixed;
             inset: 0;
-            background: var(--bg);
+            background: #fbfaf5;
             z-index: 1050;
             overflow-y: auto;
-            padding: 80px 0;
+            padding: 30px 0 60px;
             display: none;
+            color: #111827;
+            font-family: 'Barlow', system-ui, -apple-system, sans-serif;
         }
-
         #dash.on {
             display: block;
         }
+
+        /* Dashboard Top Header */
+        .cms-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(17, 24, 39, 0.1);
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .cms-brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .cms-brand svg {
+            width: 38px;
+            height: 38px;
+        }
+        .cms-brand-text h2 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            margin: 0;
+            line-height: 1;
+            color: #111827;
+        }
+        .cms-brand-text small {
+            font-size: 12px;
+            color: #b45309;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+        .cms-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Demo Notice Banner */
+        .cms-notice {
+            background: rgba(237, 183, 30, 0.12);
+            border: 1px solid rgba(237, 183, 30, 0.4);
+            border-radius: var(--radius);
+            padding: 14px 18px;
+            margin-bottom: 26px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13.5px;
+            color: #2b313d;
+            line-height: 1.5;
+        }
+        .cms-notice-icon {
+            font-size: 20px;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        /* CMS Main Layout: Sidebar + Content Area */
+        .cms-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 28px;
+            align-items: flex-start;
+        }
+
+        /* Sidebar Navigation */
+        .cms-sidebar {
+            background: #ffffff;
+            border: 1px solid rgba(17, 24, 39, 0.09);
+            border-radius: var(--radius-lg);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 20px;
+        }
+        .cms-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: none;
+            border: none;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+        .cms-nav-item:hover {
+            background: var(--bg-subtle);
+            color: var(--text-pure);
+        }
+        .cms-nav-item.on {
+            background: var(--gold-gradient);
+            color: #111827;
+            font-weight: 700;
+            box-shadow: 0 4px 12px rgba(237, 183, 30, 0.3);
+        }
+        .cms-nav-item svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Content Container */
+        .cms-content {
+            background: #ffffff;
+            border: 1px solid rgba(17, 24, 39, 0.09);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-sm);
+            min-height: 520px;
+        }
+        .cms-panel-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+            padding-bottom: 18px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .cms-panel-title h3 {
+            font-size: 26px;
+            font-family: 'Barlow Condensed', sans-serif;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            color: var(--text-pure);
+            margin: 0;
+        }
+        .cms-panel-title p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* Overview 4-Card Grid */
+        .cms-overview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .cms-card {
+            background: #ffffff;
+            border: 1px solid rgba(17, 24, 39, 0.1);
+            border-radius: var(--radius);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            gap: 16px;
+            transition: all 0.25s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        .cms-card:hover {
+            border-color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(237, 183, 30, 0.15);
+        }
+        .cms-card-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .cms-card-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-sm);
+            background: rgba(237, 183, 30, 0.15);
+            color: #b45309;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .cms-card-header h4 {
+            font-family: 'Barlow Condensed', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #111827;
+            margin: 0;
+        }
+        .cms-card-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .cms-card-meta {
+            font-size: 12.5px;
+            color: #b45309;
+            font-weight: 600;
+            background: var(--bg-subtle);
+            padding: 6px 10px;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Forms Styling inside CMS */
+        .cms-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .cms-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+        .cms-field {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .cms-field.full {
+            grid-column: 1 / -1;
+        }
+        .cms-field label {
+            font-size: 12.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--text-muted);
+        }
+        .cms-field input,
+        .cms-field textarea,
+        .cms-field select {
+            background: #ffffff;
+            border: 1px solid rgba(17, 24, 39, 0.18);
+            border-radius: var(--radius-sm);
+            padding: 11px 14px;
+            font: inherit;
+            font-size: 14.5px;
+            color: #111827;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            box-sizing: border-box;
+            width: 100%;
+        }
+        .cms-field input:focus,
+        .cms-field textarea:focus,
+        .cms-field select:focus {
+            border-color: var(--gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(237, 183, 30, 0.2);
+        }
+        .cms-field small {
+            font-size: 11.5px;
+            color: var(--text-dim);
+        }
+
+        /* Buttons & Actions */
+        .cms-btn-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Gallery Manager Tab & Controls */
+        .cms-filter-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(17, 24, 39, 0.08);
+            padding-bottom: 12px;
+        }
+        .cms-filter-btn {
+            background: var(--bg-subtle);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .cms-filter-btn.on {
+            background: var(--gold-gradient);
+            color: #111827;
+            border-color: var(--gold);
+            font-weight: 700;
+        }
+        .cms-upload-box {
+            border: 2px dashed rgba(237, 183, 30, 0.5);
+            background: rgba(251, 250, 245, 0.6);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-align: center;
+            margin-bottom: 24px;
+            transition: all 0.2s ease;
+        }
+        .cms-upload-box:hover {
+            border-color: var(--gold-dark);
+            background: rgba(237, 183, 30, 0.06);
+        }
+
+        /* Media Thumbnail Grid */
+        .cms-media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 18px;
+        }
+        .cms-media-card {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-sm);
+            position: relative;
+        }
+        .cms-media-thumb {
+            width: 100%;
+            height: 140px;
+            background: #111827;
+            position: relative;
+            overflow: hidden;
+        }
+        .cms-media-thumb img,
+        .cms-media-thumb video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .cms-media-type-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(17, 24, 39, 0.85);
+            color: #ffffff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 3px 8px;
+            border-radius: 4px;
+            backdrop-filter: blur(4px);
+        }
+        .cms-media-info {
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            justify-content: space-between;
+        }
+        .cms-media-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #111827;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .cms-media-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(17, 24, 39, 0.06);
+        }
+
+        /* Pricing Plan Cards Editor */
+        .cms-plans-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .cms-plan-row {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .cms-plan-main {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex: 1;
+            min-width: 200px;
+        }
+        .cms-plan-main h4 {
+            font-size: 20px;
+            margin: 0;
+            color: #111827;
+        }
+        .cms-plan-price {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--gold-dark);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 900px) {
+            .cms-layout {
+                grid-template-columns: 1fr;
+            }
+            .cms-sidebar {
+                position: static;
+                flex-direction: row;
+                overflow-x: auto;
+                padding: 8px;
+                gap: 8px;
+                white-space: nowrap;
+            }
+            .cms-nav-item {
+                flex-shrink: 0;
+                width: auto;
+                padding: 9px 14px;
+            }
+            .cms-overview-grid {
+                grid-template-columns: 1fr;
+            }
+            .cms-form-grid {
+                grid-template-columns: 1fr;
+            }
+            .cms-content {
+                padding: 20px;
+            }
+        }
+
 
         .dh {
             display: flex;
@@ -5072,7 +5528,10 @@
                         </div>
                         <div>
                             <b>MG Winner Fitness</b>
-                            <p style="font-size: 14px; color: var(--text-muted);">Saheed Nagar / Patia, Bhubaneswar, Odisha</p>
+                            <p style="font-size: 14px; color: var(--text-muted);" id="contactAddress">Saheed Nagar / Patia, Bhubaneswar, Odisha</p>
+                            <a id="contactMapsLink" href="https://maps.google.com/?q=MG+Winner+Fitness+Bhubaneswar" target="_blank" rel="noopener noreferrer" class="btn sm g" style="margin-top:8px; display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:5px 12px">
+                                <span>📍 Open in Google Maps</span>
+                            </a>
                         </div>
                     </li>
                     <li>
@@ -5081,7 +5540,7 @@
                         </div>
                         <div>
                             <b>Direct Desk Phone</b>
-                            <p style="font-size: 14px; color: var(--text-muted);">+91 98765 43210 / WhatsApp Available</p>
+                            <p style="font-size: 14px; color: var(--text-muted);"><a href="tel:+919876543210" id="contactTelLink" style="color:var(--text-pure); font-weight:700">+91 98765 43210</a> <span id="contactPhoneText">/ WhatsApp Available</span></p>
                         </div>
                     </li>
                     <li>
@@ -5090,7 +5549,7 @@
                         </div>
                         <div>
                             <b>Official Inquiries</b>
-                            <p style="font-size: 14px; color: var(--text-muted);">contact@mgwinnerfitness.com</p>
+                            <p style="font-size: 14px; color: var(--text-muted);"><a href="mailto:contact@mgwinnerfitness.com" id="contactEmailLink" style="color:var(--text-pure); font-weight:600"><span id="contactEmailText">contact@mgwinnerfitness.com</span></a></p>
                         </div>
                     </li>
                 </ul>
@@ -5772,14 +6231,10 @@
         let role = 'member';
         function login() {
             modal(`
-                <h3>Member Portal Login</h3>
-                <p class="note">Access your membership pass, attendance log, and workout tracker.</p>
-                <div class="tb">
-                    <button class="on" data-role="member">Member Hub</button>
-                    <button data-role="owner">Club Owner</button>
-                </div>
+                <h3>CLUB OWNER LOGIN</h3>
+                <p class="note">Enter your credentials to access the owner management dashboard.</p>
                 <form id="lf">
-                    <label>Mobile Number or Email<input required placeholder="Registered phone or email"></label>
+                    <label>Username or Email<input required placeholder="Enter username or email" value="admin"></label>
                     <label>Password
                         <div style="position:relative">
                             <input id="pw" type="password" required value="demo1234" style="width:100%">
@@ -5793,11 +6248,6 @@
                     <button type="submit" class="btn" style="margin-top:10px">Sign In to Dashboard</button>
                 </form>
             `);
-
-            $$('.tb button').forEach(b => b.onclick = () => {
-                role = b.dataset.role;
-                $$('.tb button').forEach(x => x.classList.toggle('on', x === b));
-            });
 
             $('#sp').onclick = () => {
                 const p = $('#pw');
@@ -5824,185 +6274,1086 @@
             $('#lf').onsubmit = e => {
                 e.preventDefault();
                 closeM();
-                dash(role);
+                dash();
             };
         }
 
-        // Demo Data & Dashboard Handlers
-        const dd = n => {
-            const d = new Date();
-            d.setDate(d.getDate() + n);
-            return d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+        
+        // ============================================================
+        // MG WINNER FITNESS - CONTENT MANAGEMENT DASHBOARD (CMS)
+        // Standalone Client Demo Storage & Public Website Controller
+        // ============================================================
+
+        const CMSStore = {
+            DB_NAME: 'MGCMS_DB',
+            DB_VERSION: 1,
+            STORE_MEDIA: 'media',
+            KEY_SETTINGS: 'mg_cms_content_v2',
+            KEY_DELETED_DEFAULTS: 'mg_cms_deleted_defaults_v2',
+            db: null,
+
+            defaultSettings: {
+                contact: {
+                    phone1: "+91 98765 43210",
+                    phone2: "+91 98765 43211",
+                    whatsapp: "919876543210",
+                    email: "contact@mgwinnerfitness.com",
+                    address: "Saheed Nagar / Patia, Bhubaneswar, Odisha",
+                    mapsUrl: "https://maps.google.com/?q=MG+Winner+Fitness+Bhubaneswar"
+                },
+                memberships: [
+                    {
+                        name: 'Basic',
+                        price: 1000,
+                        badge: '',
+                        features: [
+                            'Full gym floor & Being Strong unit access',
+                            'Cardio deck & panoramic treadmill zone',
+                            'Complimentary daily locker & shower use',
+                            'Initial fitness & posture assessment'
+                        ]
+                    },
+                    {
+                        name: 'Pro Athlete',
+                        price: 1800,
+                        badge: 'Popular Choice',
+                        features: [
+                            'Everything included in Basic Plan',
+                            'Bi-weekly coach form & posture check-ins',
+                            'Customized workout split & diet guidelines',
+                            'InBody body-composition analysis monthly',
+                            'Free participation in weekend challenges'
+                        ]
+                    },
+                    {
+                        name: 'Elite VIP',
+                        price: 3000,
+                        badge: 'VIP Coaching',
+                        features: [
+                            'Everything included in Pro Athlete Plan',
+                            '4 Personal 1-on-1 coaching sessions/month',
+                            'Dedicated nutrition & supplementation roadmap',
+                            '2 Complimentary guest passes per month',
+                            'Complimentary freeze period up to 45 days'
+                        ]
+                    }
+                ],
+                social: {
+                    instagram: "https://instagram.com/mgwinnerfitness",
+                    facebook: "https://facebook.com/mgwinnerfitness",
+                    youtube: "https://youtube.com/@mgwinnerfitness",
+                    twitter: "https://x.com/mgwinnerfitness"
+                }
+            },
+
+            defaultPhotos: [
+                { id: 'def-p1', type: 'photo', title: 'Plate-Loaded Hack Squat', desc: 'Being Strong biomechanical hack squat with heavy linear bearings for pure quad loading with spinal protection.', url: 'gym-hack-squat.webp', isDefault: true },
+                { id: 'def-p2', type: 'photo', title: 'Chest-Supported Row', desc: 'Iso-lateral plate-loaded back builder for deep lat activation and symmetrical upper back width.', url: 'gym-seated-row.webp', isDefault: true },
+                { id: 'def-p3', type: 'photo', title: 'Heavy Dumbbell Fleet', desc: 'Rubberized round pro-style dumbbells ranging from lightweight warmups to heavy progressive overload dumbbells.', url: 'gym-dumbbells.webp', isDefault: true },
+                { id: 'def-p4', type: 'photo', title: 'Guided Bench & Spotting', desc: 'Coaches who actively assist with liftoffs, elbow angles, wrist wraps, and eccentric control on heavy sets.', url: 'gym-coach-spotting.jpg', isDefault: true },
+                { id: 'def-p5', type: 'photo', title: 'Zumba & Aerobics Floor', desc: 'High-energy wooden flooring studio for conditioning, mobility flows, Zumba, and community team training.', url: 'gym-community.webp', isDefault: true },
+                { id: 'def-p6', type: 'photo', title: 'Lounge & Nutrition Desk', desc: 'Seamless digital check-in, pre-workout hydration station, and post-workout nutritional consultation.', url: 'gym-reception.webp', isDefault: true }
+            ],
+
+            defaultVideos: [
+                { id: 'def-v1', type: 'video', title: 'Being Strong Floor Action', poster: 'poster-reel1.jpg', src: 'reel-mgwinner-fullhd.mp4', isDefault: true },
+                { id: 'def-v2', type: 'video', title: 'Cardio Deck & Treadmills', poster: 'poster-reel2.jpg', src: 'reel-cardio-floor.mp4', isDefault: true },
+                { id: 'def-v3', type: 'video', title: 'Gym Lifestyle & Community', poster: 'poster-reel3.jpg', src: 'reel-gym-lifestyle.mp4', isDefault: true },
+                { id: 'def-v4', type: 'video', title: 'Workout Motivation & PRs', poster: 'poster-reel4.jpg', src: 'reel-workout-motivation.mp4', isDefault: true }
+            ],
+
+            openDB() {
+                return new Promise((resolve) => {
+                    if (this.db) return resolve(this.db);
+                    try {
+                        const req = indexedDB.open(this.DB_NAME, this.DB_VERSION);
+                        req.onupgradeneeded = e => {
+                            const db = e.target.result;
+                            if (!db.objectStoreNames.contains(this.STORE_MEDIA)) {
+                                db.createObjectStore(this.STORE_MEDIA, { keyPath: 'id' });
+                            }
+                        };
+                        req.onsuccess = e => {
+                            this.db = e.target.result;
+                            resolve(this.db);
+                        };
+                        req.onerror = () => resolve(null);
+                    } catch(e) {
+                        resolve(null);
+                    }
+                });
+            },
+
+            async getAllMedia() {
+                try {
+                    const db = await this.openDB();
+                    const deleted = JSON.parse(localStorage.getItem(this.KEY_DELETED_DEFAULTS) || '[]');
+                    const activeDefPhotos = this.defaultPhotos.filter(p => !deleted.includes(p.id));
+                    const activeDefVideos = this.defaultVideos.filter(v => !deleted.includes(v.id));
+
+                    if (!db) {
+                        return [...activeDefPhotos, ...activeDefVideos];
+                    }
+
+                    return new Promise(resolve => {
+                        try {
+                            const tx = db.transaction(this.STORE_MEDIA, 'readonly');
+                            const store = tx.objectStore(this.STORE_MEDIA);
+                            const req = store.getAll();
+                            req.onsuccess = () => {
+                                const customList = req.result || [];
+                                resolve([...activeDefPhotos, ...activeDefVideos, ...customList]);
+                            };
+                            req.onerror = () => resolve([...activeDefPhotos, ...activeDefVideos]);
+                        } catch(e) {
+                            resolve([...activeDefPhotos, ...activeDefVideos]);
+                        }
+                    });
+                } catch(e) {
+                    return [...this.defaultPhotos, ...this.defaultVideos];
+                }
+            },
+
+            async saveMediaItem(item) {
+                try {
+                    const db = await this.openDB();
+                    if (!db) return false;
+                    return new Promise((resolve, reject) => {
+                        const tx = db.transaction(this.STORE_MEDIA, 'readwrite');
+                        const store = tx.objectStore(this.STORE_MEDIA);
+                        const req = store.put(item);
+                        req.onsuccess = () => resolve(true);
+                        req.onerror = e => reject(e);
+                    });
+                } catch(e) {
+                    console.error('Failed to save to IndexedDB', e);
+                    return false;
+                }
+            },
+
+            async deleteMediaItem(id) {
+                if (id.startsWith('def-')) {
+                    const deleted = JSON.parse(localStorage.getItem(this.KEY_DELETED_DEFAULTS) || '[]');
+                    if (!deleted.includes(id)) {
+                        deleted.push(id);
+                        localStorage.setItem(this.KEY_DELETED_DEFAULTS, JSON.stringify(deleted));
+                    }
+                    return true;
+                }
+                try {
+                    const db = await this.openDB();
+                    if (!db) return false;
+                    return new Promise((resolve) => {
+                        const tx = db.transaction(this.STORE_MEDIA, 'readwrite');
+                        const store = tx.objectStore(this.STORE_MEDIA);
+                        const req = store.delete(id);
+                        req.onsuccess = () => resolve(true);
+                        req.onerror = () => resolve(false);
+                    });
+                } catch(e) {
+                    return false;
+                }
+            },
+
+            getSettings() {
+                try {
+                    const saved = localStorage.getItem(this.KEY_SETTINGS);
+                    if (saved) return JSON.parse(saved);
+                } catch(e) {}
+                return JSON.parse(JSON.stringify(this.defaultSettings));
+            },
+
+            saveSettings(settings) {
+                localStorage.setItem(this.KEY_SETTINGS, JSON.stringify(settings));
+            },
+
+            async resetAll() {
+                localStorage.removeItem(this.KEY_SETTINGS);
+                localStorage.removeItem(this.KEY_DELETED_DEFAULTS);
+                try {
+                    const db = await this.openDB();
+                    if (db) {
+                        const tx = db.transaction(this.STORE_MEDIA, 'readwrite');
+                        tx.objectStore(this.STORE_MEDIA).clear();
+                    }
+                } catch(e) {}
+            }
         };
 
-        let M = [
-            ['Subhashree Panda', 'Pro Athlete', 20],
-            ['Aarav Senapati', 'Basic', 12],
-            ['Bina Mohanty', 'Elite VIP', 5],
-            ['Chitra Nayak', 'Pro Athlete', -12],
-            ['Devendra Biswal', 'Basic', 45],
-            ['Esha Das', 'Basic', -3],
-            ['Farid Khan', 'Elite VIP', 2]
-        ].map(a => ({ n: a[0], p: a[1], d: a[2] }));
+        // ============================================================
+        // PUBLIC WEBSITE DYNAMIC UPDATERS
+        // ============================================================
 
-        const st = m => m.d < 0 ? ['Overdue', 'o'] : m.d <= 7 ? ['Due soon', 'd'] : ['Active', 'a'];
+        function applyPublicContact(c) {
+            if (!c) return;
+            // 1. Address
+            const addrEl = $('#contactAddress');
+            if (addrEl) addrEl.textContent = c.address;
 
-        function qr() {
-            let s = 7;
-            const r = () => (s = (s * 1664525 + 1013904223) >>> 0) / 4294967296;
-            let o = '';
-            for (let y = 0; y < 21; y++) {
-                for (let x = 0; x < 21; x++) {
-                    const f = (x < 8 && y < 8) || (x > 12 && y < 8) || (x < 8 && y > 12);
-                    let on;
-                    if (f) {
-                        const fx = x > 12 ? x - 14 : x, fy = y > 12 ? y - 14 : y, q = Math.max(Math.abs(fx - 3), Math.abs(fy - 3));
-                        on = q <= 1 || q === 3;
-                    } else {
-                        on = r() > 0.52;
-                    }
-                    if (on) o += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
-                }
+            // 2. Desk Phones
+            const phoneEl = $('#contactPhoneText');
+            if (phoneEl) phoneEl.textContent = `${c.phone1} ${c.phone2 ? '· ' + c.phone2 : ''} / WhatsApp Available`;
+
+            // 3. Tel Link
+            const telLink = $('#contactTelLink');
+            if (telLink) {
+                telLink.setAttribute('href', `tel:${c.phone1.replace(/\s+/g, '')}`);
+                telLink.textContent = c.phone1;
             }
-            return `<svg class="qr" viewBox="-1 -1 23 23" fill="#111">${o}</svg>`;
+
+            // 4. Email
+            const emailEl = $('#contactEmailText');
+            if (emailEl) emailEl.textContent = c.email;
+
+            // 5. WhatsApp Floating Button & Links
+            const waClean = c.whatsapp ? c.whatsapp.replace(/[^0-9]/g, '') : '919876543210';
+            const waHref = `https://wa.me/${waClean}?text=${encodeURIComponent('Hello MG Winner Fitness, I am interested in joining!')}`;
+            const fabWa = $('.fab-whatsapp');
+            if (fabWa) fabWa.setAttribute('href', waHref);
+
+            // 6. Google Maps Link
+            const mapsBtn = $('#contactMapsLink');
+            if (mapsBtn && c.mapsUrl) {
+                mapsBtn.setAttribute('href', c.mapsUrl);
+            }
         }
 
-        function dash(r) {
+        function applyPublicSocial(s) {
+            if (!s) return;
+            const socLinks = $$('footer .soc-links a');
+            if (socLinks.length >= 3) {
+                if (s.instagram) {
+                    socLinks[0].setAttribute('href', s.instagram);
+                    socLinks[0].setAttribute('target', '_blank');
+                    socLinks[0].setAttribute('rel', 'noopener noreferrer');
+                    socLinks[0].removeAttribute('data-soc');
+                }
+                if (s.facebook) {
+                    socLinks[1].setAttribute('href', s.facebook);
+                    socLinks[1].setAttribute('target', '_blank');
+                    socLinks[1].setAttribute('rel', 'noopener noreferrer');
+                    socLinks[1].removeAttribute('data-soc');
+                }
+                if (s.youtube) {
+                    socLinks[2].setAttribute('href', s.youtube);
+                    socLinks[2].setAttribute('target', '_blank');
+                    socLinks[2].setAttribute('rel', 'noopener noreferrer');
+                    socLinks[2].removeAttribute('data-soc');
+                }
+            }
+        }
+
+        function applyPublicMemberships(mList) {
+            if (!mList || !mList.length) return;
+            window.CMS_PLANS = mList;
+            // Overwrite global PL, BASE, FE used by plans()
+            PL.length = 0;
+            mList.forEach(m => PL.push(m.name));
+            Object.keys(BASE).forEach(k => delete BASE[k]);
+            mList.forEach(m => BASE[m.name] = m.price);
+            Object.keys(FE).forEach(k => delete FE[k]);
+            mList.forEach(m => FE[m.name] = m.features || []);
+
+            if (typeof plans === 'function') {
+                plans();
+            }
+        }
+
+        async function applyPublicGallery() {
+            const allMedia = await CMSStore.getAllMedia();
+            const photos = allMedia.filter(m => m.type === 'photo');
+            const videos = allMedia.filter(m => m.type === 'video');
+
+            // Render Facilities (Photos)
+            const gl = $('.gl');
+            if (gl && photos.length) {
+                gl.innerHTML = photos.map(p => `
+                    <div class="card-fac">
+                        <div class="card-fac-img">
+                            <img src="${p.url || p.dataUrl}" loading="lazy" alt="${p.title}">
+                        </div>
+                        <div class="card-fac-content">
+                            <h3>${p.title}</h3>
+                            <p>${p.desc || ''}</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Update mobile carousel dots if present
+                const dotContainer = $('.fac-carousel-pagination');
+                if (dotContainer) {
+                    dotContainer.innerHTML = photos.map((_, i) => `
+                        <button type="button" class="fac-dot ${i === 0 ? 'active-dot' : ''}" aria-label="Go to photo ${i+1}" aria-current="${i === 0 ? 'true' : 'false'}" data-index="${i}"><span></span></button>
+                    `).join('');
+                }
+                if (typeof initFacilityCarousel === 'function') {
+                    initFacilityCarousel();
+                }
+            }
+
+            // Render Reels (Videos)
+            const reelsGrid = $('.reels-grid');
+            if (reelsGrid && videos.length) {
+                reelsGrid.innerHTML = videos.map((v, i) => `
+                    <div class="reel-card" id="reel-${i+1}">
+                        <div class="reel-video-wrap">
+                            <video loop muted playsinline webkit-playsinline preload="metadata" poster="${v.poster || ''}" src="${v.src || v.dataUrl}"></video>
+                            <div class="reel-overlay">
+                                <div class="reel-top-bar">
+                                    <button type="button" class="reel-audio-btn" aria-label="Unmute reel" aria-pressed="false">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" fill="currentColor"></polygon><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                                    </button>
+                                    <button type="button" class="reel-toggle-btn" aria-label="Play reel" aria-pressed="false">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                                    </button>
+                                </div>
+                                <div class="reel-meta">
+                                    <span class="reel-badge">Floor Reel</span>
+                                    <h3 class="reel-title">${v.title}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+
+                if (typeof initReelControllers === 'function') {
+                    initReelControllers();
+                }
+            }
+        }
+
+        // Initialize public site with stored CMS content
+        function initCMSPublicSync() {
+            const settings = CMSStore.getSettings();
+            applyPublicContact(settings.contact);
+            applyPublicSocial(settings.social);
+            applyPublicMemberships(settings.memberships);
+            applyPublicGallery();
+        }
+
+        // ============================================================
+        // CONTENT MANAGEMENT DASHBOARD CONTROLLER
+        // ============================================================
+
+        let currentCMSTab = 'overview';
+        let currentGalleryFilter = 'all';
+
+        async function dash(tab = 'overview') {
+            currentCMSTab = tab;
             const d = $('#dc');
+            if (!d) return;
+
             $('#dash').classList.add('on');
             $('#dash').scrollTop = 0;
             document.body.style.overflow = 'hidden';
 
-            const head = t => `
-                <div class="dh">
-                    <div>
-                        <span class="badge gold" style="margin-bottom:8px">Interactive Demo</span>
-                        <h2>${t}</h2>
+            const settings = CMSStore.getSettings();
+            const allMedia = await CMSStore.getAllMedia();
+            const photos = allMedia.filter(m => m.type === 'photo');
+            const videos = allMedia.filter(m => m.type === 'video');
+
+            d.innerHTML = `
+                <!-- Dashboard Topbar -->
+                <div class="cms-topbar">
+                    <div class="cms-brand">
+                        <svg viewBox="0 0 100 100"><use href="#mk" /></svg>
+                        <div class="cms-brand-text">
+                            <h2>MG Winner Fitness</h2>
+                            <small>Content Management Panel</small>
+                        </div>
                     </div>
-                    <div class="row">
+                    <div class="cms-actions">
+                        <button class="btn g sm" id="cmsResetBtn" style="border-color: rgba(180, 83, 9, 0.4); color: var(--gold-dark);">↺ Reset Demo</button>
                         <button class="btn g sm" data-go="home">Back to Website</button>
                         <button class="btn sm" data-out>Logout</button>
                     </div>
                 </div>
+
+                <!-- Demo Notice -->
+                <div class="cms-notice">
+                    <div class="cms-notice-icon">ℹ️</div>
+                    <div class="cms-notice-text">
+                        <b>Demo Mode:</b> Changes are saved locally in this browser and are not published to the live website.<br>
+                        <small style="opacity:0.85;">Website text settings persist in localStorage; photos & videos are stored securely in IndexedDB on this device.</small>
+                    </div>
+                </div>
+
+                <!-- Main Layout -->
+                <div class="cms-layout">
+                    <!-- Sidebar Navigation -->
+                    <aside class="cms-sidebar" id="cmsSidebar">
+                        <button class="cms-nav-item ${currentCMSTab === 'overview' ? 'on' : ''}" data-tab="overview">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                            <span>Overview</span>
+                        </button>
+                        <button class="cms-nav-item ${currentCMSTab === 'contact' ? 'on' : ''}" data-tab="contact">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>Contact Information</span>
+                        </button>
+                        <button class="cms-nav-item ${currentCMSTab === 'gallery' ? 'on' : ''}" data-tab="gallery">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            <span>Gallery (Photos & Videos)</span>
+                        </button>
+                        <button class="cms-nav-item ${currentCMSTab === 'pricing' ? 'on' : ''}" data-tab="pricing">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                            <span>Membership Pricing</span>
+                        </button>
+                        <button class="cms-nav-item ${currentCMSTab === 'social' ? 'on' : ''}" data-tab="social">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                            <span>Social Media Links</span>
+                        </button>
+                    </aside>
+
+                    <!-- Main Dynamic Content Panel -->
+                    <main class="cms-content" id="cmsPanelContainer">
+                        <!-- Injected View -->
+                    </main>
+                </div>
             `;
 
-            if (r === 'member') {
-                const m = M[0], s = st(m);
-                d.innerHTML = head('Member Hub') + `
-                    <div class="dc">
-                        <h3>Welcome back, ${m.n}</h3>
-                        <p style="color:var(--text-muted);font-size:16px">Plan: <b style="color:var(--text-pure)">${m.p}</b></p>
-                        <p style="margin:14px 0">
-                            <span class="pl ${s[1]}">${s[0]}</span> 
-                            Valid till <b>${dd(m.d)}</b> · <span style="color:var(--gold-dark);font-weight:700">${m.d} days remaining</span>
-                        </p>
-                        <button class="btn sm" data-renew>Renew Plan Early</button>
+            // Bind Sidebar Navigation Clicks
+            $$('#cmsSidebar .cms-nav-item').forEach(btn => {
+                btn.onclick = () => {
+                    const t = btn.dataset.tab;
+                    dash(t);
+                };
+            });
+
+            // Bind Reset Demo Button
+            $('#cmsResetBtn').onclick = () => {
+                modal(`
+                    <h3>Reset Website Content?</h3>
+                    <p class="note">This will restore all default contact details, gallery photos, workout reels, and membership pricing from the original website.</p>
+                    <div class="cms-btn-row" style="margin-top:20px">
+                        <button class="btn" id="confirmResetBtn">Yes, Reset to Defaults</button>
+                        <button class="btn g" onclick="closeM()">Cancel</button>
                     </div>
-                    <div class="dc">
-                        <h3>Digital Entry QR Code</h3>
-                        <p style="color:var(--text-muted);font-size:14px">Scan this QR at the front desk turnstile for instant check-in.</p>
-                        ${qr()}
-                        <p style="font-size:13px;color:var(--gold-dark);font-weight:700">Status: Active & Verified</p>
+                `);
+                $('#confirmResetBtn').onclick = async () => {
+                    closeM();
+                    await CMSStore.resetAll();
+                    initCMSPublicSync();
+                    toast('Website content restored to factory defaults!');
+                    dash('overview');
+                };
+            };
+
+            // Render Active Sub-View
+            renderActiveCMSPanel(currentCMSTab, settings, allMedia, photos, videos);
+        }
+
+        function renderActiveCMSPanel(tab, settings, allMedia, photos, videos) {
+            const container = $('#cmsPanelContainer');
+            if (!container) return;
+
+            if (tab === 'overview') {
+                container.innerHTML = `
+                    <div class="cms-panel-title">
+                        <div>
+                            <h3>Dashboard Overview</h3>
+                            <p>Select a section below to update live website content.</p>
+                        </div>
                     </div>
-                    <div class="dc">
-                        <h3>Your Recent Floor Attendance</h3>
-                        <p style="color:var(--text-muted);font-size:14px">Attendance consistency in the last 14 days:</p>
-                        <div class="dots">
-                            ${Array.from({ length: 14 }, (_, i) => `<i class="${[0, 1, 3, 5, 6, 8, 10, 12].includes(i) ? 'p' : ''}"></i>`).join('')}
+                    <div class="cms-overview-grid">
+                        <!-- Card 1: Contact -->
+                        <div class="cms-card" onclick="dash('contact')">
+                            <div class="cms-card-header">
+                                <div class="cms-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                </div>
+                                <div>
+                                    <h4>Contact Information</h4>
+                                </div>
+                            </div>
+                            <div class="cms-card-desc">
+                                Primary phone, WhatsApp number, email desk, gym floor address, and Google Maps pin link.
+                            </div>
+                            <div>
+                                <span class="cms-card-meta">${settings.contact.phone1} • ${settings.contact.email}</span>
+                            </div>
+                            <button class="btn sm" style="width:100%">Edit Contact Details</button>
+                        </div>
+
+                        <!-- Card 2: Gallery -->
+                        <div class="cms-card" onclick="dash('gallery')">
+                            <div class="cms-card-header">
+                                <div class="cms-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                                </div>
+                                <div>
+                                    <h4>Gallery Management</h4>
+                                </div>
+                            </div>
+                            <div class="cms-card-desc">
+                                Upload and manage high-resolution Being Strong facilities photos and vertical workout reels videos.
+                            </div>
+                            <div>
+                                <span class="cms-card-meta">${photos.length} Photos Active • ${videos.length} Videos Active</span>
+                            </div>
+                            <button class="btn sm" style="width:100%">Manage Photos & Videos</button>
+                        </div>
+
+                        <!-- Card 3: Memberships -->
+                        <div class="cms-card" onclick="dash('pricing')">
+                            <div class="cms-card-header">
+                                <div class="cms-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                                </div>
+                                <div>
+                                    <h4>Membership Pricing</h4>
+                                </div>
+                            </div>
+                            <div class="cms-card-desc">
+                                Configure gym plans, monthly base rates, duration discounts (3M / 1Yr), and included features list.
+                            </div>
+                            <div>
+                                <span class="cms-card-meta">${settings.memberships.length} Active Plans • Starts ₹${settings.memberships[0]?.price || 1000}/mo</span>
+                            </div>
+                            <button class="btn sm" style="width:100%">Manage Plans & Rates</button>
+                        </div>
+
+                        <!-- Card 4: Social Media -->
+                        <div class="cms-card" onclick="dash('social')">
+                            <div class="cms-card-header">
+                                <div class="cms-card-icon">
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                                </div>
+                                <div>
+                                    <h4>Social Media Links</h4>
+                                </div>
+                            </div>
+                            <div class="cms-card-desc">
+                                Official Instagram, Facebook, and YouTube channels displayed across public website links and footer.
+                            </div>
+                            <div>
+                                <span class="cms-card-meta">Instagram • Facebook • YouTube Active</span>
+                            </div>
+                            <button class="btn sm" style="width:100%">Edit Social Channels</button>
                         </div>
                     </div>
                 `;
-            } else {
-                const draw = () => {
-                    const q = $('#aq').value.toLowerCase();
-                    const f = $('#af').value;
-                    const rows = M.map((m, i) => [m, i]).filter(([m]) => m.n.toLowerCase().includes(q) && (!f || st(m)[0] === f));
+            } else if (tab === 'contact') {
+                renderContactManager(container, settings.contact);
+            } else if (tab === 'gallery') {
+                renderGalleryManager(container, allMedia, photos, videos);
+            } else if (tab === 'pricing') {
+                renderPricingManager(container, settings.memberships);
+            } else if (tab === 'social') {
+                renderSocialManager(container, settings.social);
+            }
+        }
 
-                    $('#at').innerHTML = `
-                        <tr>
-                            <th>Member Name</th>
-                            <th>Plan</th>
-                            <th>Expiry Date</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    ` + (rows.length ? rows.map(([m, i]) => `
-                        <tr>
-                            <td><b>${m.n}</b></td>
-                            <td>${m.p}</td>
-                            <td>${dd(m.d)}</td>
-                            <td><span class="pl ${st(m)[1]}">${st(m)[0]}</span></td>
-                            <td>
-                                ${st(m)[1] === 'a' ? '<span style="color:var(--text-dim);font-size:13px">Up to date</span>' : `<button class="btn sm" data-pay="${i}">Collect Fee (+30d)</button>`}
-                            </td>
-                        </tr>
-                    `).join('') : '<tr><td colspan="5" style="text-align:center;padding:24px">No members match your search.</td></tr>');
-
-                    const c = k => M.filter(m => st(m)[0] === k).length;
-                    $('#as').innerHTML = [
-                        ['Total Members', M.length],
-                        ['Active', c('Active')],
-                        ['Due Soon', c('Due soon')],
-                        ['Overdue', c('Overdue')]
-                    ].map(x => `
-                        <div>
-                            <b>${x[1]}</b>
-                            <span style="color:var(--text-muted);font-size:14px;font-weight:600">${x[0]}</span>
+        // ============================================================
+        // SECTION 2: CONTACT INFORMATION MANAGER
+        // ============================================================
+        function renderContactManager(container, contact) {
+            container.innerHTML = `
+                <div class="cms-panel-title">
+                    <div>
+                        <h3>Contact Information</h3>
+                        <p>Changes saved here automatically update telephone links, WhatsApp action buttons, and desk locations.</p>
+                    </div>
+                </div>
+                <form class="cms-form" id="cmsContactForm">
+                    <div class="cms-form-grid">
+                        <div class="cms-field">
+                            <label>Primary Phone Number</label>
+                            <input type="tel" id="c_phone1" value="${contact.phone1 || ''}" required placeholder="+91 98765 43210">
+                            <small>Main clickable desk telephone number (e.g. +91 98765 43210)</small>
                         </div>
-                    `).join('');
+                        <div class="cms-field">
+                            <label>Secondary Phone Number (Optional)</label>
+                            <input type="tel" id="c_phone2" value="${contact.phone2 || ''}" placeholder="+91 98765 43211">
+                            <small>Alternate front desk or trainer inquiry line</small>
+                        </div>
+                        <div class="cms-field">
+                            <label>WhatsApp Number</label>
+                            <input type="text" id="c_whatsapp" value="${contact.whatsapp || ''}" required placeholder="919876543210">
+                            <small>Country code + mobile number for 1-tap WhatsApp chat links</small>
+                        </div>
+                        <div class="cms-field">
+                            <label>Official Email Address</label>
+                            <input type="email" id="c_email" value="${contact.email || ''}" required placeholder="contact@mgwinnerfitness.com">
+                            <small>Inquiries & customer support desk</small>
+                        </div>
+                        <div class="cms-field full">
+                            <label>Gym Floor Address</label>
+                            <textarea id="c_address" rows="2" required placeholder="Full facility street address">${contact.address || ''}</textarea>
+                        </div>
+                        <div class="cms-field full">
+                            <label>Google Maps Directions URL</label>
+                            <input type="url" id="c_maps" value="${contact.mapsUrl || ''}" required placeholder="https://maps.google.com/...">
+                            <small>Destination link opened when visitor clicks "Open in Google Maps"</small>
+                        </div>
+                    </div>
+                    <div class="cms-btn-row">
+                        <button type="submit" class="btn">Save Contact Details</button>
+                        <button type="button" class="btn g" id="cancelContactBtn">Cancel</button>
+                    </div>
+                </form>
+            `;
+
+            $('#cmsContactForm').onsubmit = e => {
+                e.preventDefault();
+                const updated = {
+                    phone1: $('#c_phone1').value.trim(),
+                    phone2: $('#c_phone2').value.trim(),
+                    whatsapp: $('#c_whatsapp').value.trim(),
+                    email: $('#c_email').value.trim(),
+                    address: $('#c_address').value.trim(),
+                    mapsUrl: $('#c_maps').value.trim()
                 };
 
-                d.innerHTML = head('Owner Management Dashboard') + `
-                    <div class="dg" id="as"></div>
-                    <div class="dc">
-                        <h3>Member Roster & Dues</h3>
-                        <div class="tl">
-                            <input id="aq" placeholder="Search members by name...">
-                            <select id="af">
-                                <option value="">All Statuses</option>
-                                <option>Active</option>
-                                <option>Due soon</option>
-                                <option>Overdue</option>
-                            </select>
-                            <button class="btn sm" id="am">+ Register New Member</button>
-                        </div>
-                        <div class="tw">
-                            <table id="at"></table>
-                        </div>
+                // Basic validation
+                if (!updated.phone1 || !updated.email || !updated.address) {
+                    toast('Please fill in all required contact fields.');
+                    return;
+                }
+
+                const s = CMSStore.getSettings();
+                s.contact = updated;
+                CMSStore.saveSettings(s);
+                applyPublicContact(updated);
+                toast('Contact details saved and updated on public website!');
+                dash('contact');
+            };
+
+            $('#cancelContactBtn').onclick = () => {
+                dash('overview');
+            };
+        }
+
+        // ============================================================
+        // SECTION 3: GALLERY MANAGER (PHOTOS & VIDEOS)
+        // ============================================================
+        function renderGalleryManager(container, allMedia, photos, videos) {
+            const list = currentGalleryFilter === 'photos' ? photos : currentGalleryFilter === 'videos' ? videos : allMedia;
+
+            container.innerHTML = `
+                <div class="cms-panel-title">
+                    <div>
+                        <h3>Gallery Management</h3>
+                        <p>Upload and manage photos for Floor & Equipment and vertical video reels for the live workout section.</p>
                     </div>
-                `;
+                </div>
 
-                draw();
-                $('#aq').oninput = draw;
-                $('#af').onchange = draw;
-                d._draw = draw;
+                <!-- Filter Tabs -->
+                <div class="cms-filter-tabs">
+                    <button class="cms-filter-btn ${currentGalleryFilter === 'all' ? 'on' : ''}" data-filter="all">All Media (${allMedia.length})</button>
+                    <button class="cms-filter-btn ${currentGalleryFilter === 'photos' ? 'on' : ''}" data-filter="photos">Photos (${photos.length})</button>
+                    <button class="cms-filter-btn ${currentGalleryFilter === 'videos' ? 'on' : ''}" data-filter="videos">Videos (${videos.length})</button>
+                </div>
 
-                $('#am').onclick = () => {
+                <!-- Upload Drop Box -->
+                <div class="cms-upload-box" id="cmsUploadBox">
+                    <div style="font-size:32px">📸 🎬</div>
+                    <div style="font-size:15px; font-weight:700; color:var(--text-pure)">Upload New Photo or Video</div>
+                    <div style="font-size:13px; color:var(--text-muted); max-width:460px">
+                        Supports images (JPG, PNG, WebP up to 10MB) and workout video reels (MP4, WebM up to 50MB). Stored safely in local IndexedDB.
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:8px; flex-wrap:wrap; justify-content:center">
+                        <label class="btn sm" style="cursor:pointer">
+                            <span>+ Upload Photos</span>
+                            <input type="file" id="cmsPhotoInput" accept="image/jpeg,image/png,image/webp" multiple style="display:none">
+                        </label>
+                        <label class="btn g sm" style="cursor:pointer">
+                            <span>+ Upload Video Reel</span>
+                            <input type="file" id="cmsVideoInput" accept="video/mp4,video/webm" style="display:none">
+                        </label>
+                    </div>
+                    <div id="uploadProgress" style="display:none; font-size:13px; font-weight:700; color:var(--gold-dark); margin-top:8px">
+                        ⏳ Reading and storing media in IndexedDB...
+                    </div>
+                </div>
+
+                <!-- Media Grid -->
+                <div class="cms-media-grid">
+                    ${list.map(item => `
+                        <div class="cms-media-card" id="card-${item.id}">
+                            <div class="cms-media-thumb">
+                                <span class="cms-media-badge">${item.type}</span>
+                                ${item.type === 'photo' 
+                                    ? `<img src="${item.url || item.dataUrl}" alt="${item.title}">`
+                                    : `<video src="${item.src || item.dataUrl}" poster="${item.poster || ''}" muted></video>`
+                                }
+                            </div>
+                            <div class="cms-media-info">
+                                <div class="cms-media-title" title="${item.title}">${item.title}</div>
+                                <div class="cms-media-footer">
+                                    <small style="color:var(--text-dim)">${item.isDefault ? 'Default Asset' : 'Uploaded'}</small>
+                                    <button class="btn g sm" style="padding:4px 8px; font-size:11px; color:#b91c1c; border-color:rgba(185,28,28,0.3)" data-del-media="${item.id}" data-del-title="${item.title}">Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+
+            // Filter Clicks
+            $$('.cms-filter-btn').forEach(btn => {
+                btn.onclick = () => {
+                    currentGalleryFilter = btn.dataset.filter;
+                    renderGalleryManager(container, allMedia, photos, videos);
+                };
+            });
+
+            // Photo Upload Handler
+            const photoInput = $('#cmsPhotoInput');
+            if (photoInput) {
+                photoInput.onchange = async e => {
+                    const files = [...e.target.files];
+                    if (!files.length) return;
+                    $('#uploadProgress').style.display = 'block';
+
+                    for (const file of files) {
+                        if (file.size > 10 * 1024 * 1024) {
+                            toast(`Skipped "${file.name}" (File exceeds 10MB limit)`);
+                            continue;
+                        }
+                        const dataUrl = await readFileAsDataURL(file);
+                        const cleanTitle = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+                        await CMSStore.saveMediaItem({
+                            id: 'cust-p-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+                            type: 'photo',
+                            title: cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1),
+                            desc: 'Custom high-resolution facility photo captured at MG Winner Fitness.',
+                            dataUrl: dataUrl,
+                            date: Date.now()
+                        });
+                    }
+
+                    $('#uploadProgress').style.display = 'none';
+                    await applyPublicGallery();
+                    toast('Photos uploaded and added to public gallery!');
+                    dash('gallery');
+                };
+            }
+
+            // Video Upload Handler
+            const videoInput = $('#cmsVideoInput');
+            if (videoInput) {
+                videoInput.onchange = async e => {
+                    const file = e.target.files[0];
+                    if (!file) return;
+                    if (file.size > 50 * 1024 * 1024) {
+                        toast(`Video exceeds 50MB limit.`);
+                        return;
+                    }
+                    $('#uploadProgress').style.display = 'block';
+                    const dataUrl = await readFileAsDataURL(file);
+                    const cleanTitle = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ');
+                    await CMSStore.saveMediaItem({
+                        id: 'cust-v-' + Date.now(),
+                        type: 'video',
+                        title: cleanTitle.charAt(0).toUpperCase() + cleanTitle.slice(1),
+                        dataUrl: dataUrl,
+                        date: Date.now()
+                    });
+                    $('#uploadProgress').style.display = 'none';
+                    await applyPublicGallery();
+                    toast('Workout reel video uploaded and active on website!');
+                    dash('gallery');
+                };
+            }
+
+            // Delete Media Handler with Confirmation
+            $$('[data-del-media]').forEach(btn => {
+                btn.onclick = () => {
+                    const id = btn.dataset.delMedia;
+                    const title = btn.dataset.delTitle || 'this item';
                     modal(`
-                        <h3>Register New Member</h3>
-                        <p class="note">Add athlete details to the MG Winner Fitness active database.</p>
-                        <form id="mf">
-                            <label>Full Name<input required placeholder="e.g. Priyabrata Sahoo"></label>
-                            <label>Plan
-                                <select>
-                                    ${PL.map(p => `<option>${p}</option>`).join('')}
-                                </select>
-                            </label>
-                            <button class="btn" style="margin-top:10px">Save & Issue Pass</button>
+                        <h3>Delete Gallery Item?</h3>
+                        <p class="note">Are you sure you want to remove "<b>${title}</b>" from the website gallery?</p>
+                        <div class="cms-btn-row" style="margin-top:20px">
+                            <button class="btn" id="confirmDeleteMediaBtn" style="background:#b91c1c; border-color:#b91c1c; color:#fff">Delete Item</button>
+                            <button class="btn g" onclick="closeM()">Cancel</button>
+                        </div>
+                    `);
+                    $('#confirmDeleteMediaBtn').onclick = async () => {
+                        closeM();
+                        await CMSStore.deleteMediaItem(id);
+                        await applyPublicGallery();
+                        toast(`Removed "${title}" from gallery.`);
+                        dash('gallery');
+                    };
+                };
+            });
+        }
+
+        function readFileAsDataURL(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = e => reject(e);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // ============================================================
+        // SECTION 4: MEMBERSHIP PRICING MANAGER
+        // ============================================================
+        function renderPricingManager(container, memberships) {
+            container.innerHTML = `
+                <div class="cms-panel-title">
+                    <div>
+                        <h3>Membership Pricing Management</h3>
+                        <p>Configure gym membership tiers, monthly prices, and bullet points displayed on the public site.</p>
+                    </div>
+                    <button class="btn sm" id="cmsAddPlanBtn">+ Add New Plan</button>
+                </div>
+
+                <div class="cms-plans-list">
+                    ${memberships.map((m, idx) => `
+                        <div class="cms-plan-row">
+                            <div class="cms-plan-main">
+                                <div>
+                                    <h4>${m.name} ${m.badge ? `<span style="font-size:11px; background:var(--gold); color:#111; padding:2px 6px; border-radius:4px; margin-left:6px">${m.badge}</span>` : ''}</h4>
+                                    <div class="cms-plan-price">₹${m.price}<small style="font-size:12px; color:var(--text-muted)"> / month</small></div>
+                                    <ul style="font-size:12.5px; color:var(--text-muted); margin-top:6px; padding-left:18px">
+                                        ${(m.features || []).slice(0, 3).map(f => `<li>${f}</li>`).join('')}
+                                        ${(m.features || []).length > 3 ? `<li>+ ${(m.features || []).length - 3} more features</li>` : ''}
+                                    </ul>
+                                </div>
+                            </div>
+                            <div style="display:flex; gap:8px">
+                                <button class="btn sm g" data-edit-plan="${idx}">Edit</button>
+                                ${memberships.length > 1 ? `<button class="btn sm g" style="color:#b91c1c; border-color:rgba(185,28,28,0.3)" data-del-plan="${idx}">Delete</button>` : ''}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div style="margin-top:28px">
+                    <h4 style="font-size:18px; font-weight:700; margin-bottom:12px; text-transform:uppercase">Live Public Card Preview</h4>
+                    <div class="tk-grid" id="cmsLiveCardsPreview" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:20px">
+                        ${memberships.map((p, i) => `
+                            <div class="tk ${i === 1 ? 'f' : ''}">
+                                <h3>${p.name}</h3>
+                                <div class="pc">₹${p.price}<small>/month</small></div>
+                                <ul>${(p.features || []).map(f => `<li>${f}</li>`).join('')}</ul>
+                                <button class="btn ${i === 1 ? '' : 'g'}">Select ${p.name}</button>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Edit Plan
+            $$('[data-edit-plan]').forEach(btn => {
+                btn.onclick = () => {
+                    const idx = +btn.dataset.editPlan;
+                    const plan = memberships[idx];
+                    modal(`
+                        <h3>Edit ${plan.name} Plan</h3>
+                        <form id="editPlanForm" class="cms-form" style="margin-top:16px">
+                            <div class="cms-field">
+                                <label>Plan Name</label>
+                                <input type="text" id="ep_name" value="${plan.name}" required>
+                            </div>
+                            <div class="cms-field">
+                                <label>Monthly Price (₹)</label>
+                                <input type="number" id="ep_price" value="${plan.price}" min="100" required>
+                            </div>
+                            <div class="cms-field">
+                                <label>Badge Tag (Optional, e.g. "Popular Choice")</label>
+                                <input type="text" id="ep_badge" value="${plan.badge || ''}">
+                            </div>
+                            <div class="cms-field">
+                                <label>Included Features (One per line)</label>
+                                <textarea id="ep_features" rows="5" required>${(plan.features || []).join('\n')}</textarea>
+                            </div>
+                            <div class="cms-btn-row">
+                                <button type="submit" class="btn">Save Plan</button>
+                                <button type="button" class="btn g" onclick="closeM()">Cancel</button>
+                            </div>
                         </form>
                     `);
 
-                    $('#mf').onsubmit = e => {
+                    $('#editPlanForm').onsubmit = e => {
                         e.preventDefault();
-                        const v = $$('#mf input,#mf select').map(x => x.value);
-                        M.push({ n: v[0], p: v[1], d: 30 });
+                        const updatedPlans = [...memberships];
+                        updatedPlans[idx] = {
+                            name: $('#ep_name').value.trim(),
+                            price: +$('#ep_price').value,
+                            badge: $('#ep_badge').value.trim(),
+                            features: $('#ep_features').value.split('\n').map(x => x.trim()).filter(Boolean)
+                        };
+                        const s = CMSStore.getSettings();
+                        s.memberships = updatedPlans;
+                        CMSStore.saveSettings(s);
+                        applyPublicMemberships(updatedPlans);
                         closeM();
-                        draw();
-                        toast(`Member "${v[0]}" registered successfully!`);
+                        toast(`Updated ${updatedPlans[idx].name} plan!`);
+                        dash('pricing');
                     };
                 };
+            });
+
+            // Add Plan
+            $('#cmsAddPlanBtn').onclick = () => {
+                modal(`
+                    <h3>Add New Membership Plan</h3>
+                    <form id="addPlanForm" class="cms-form" style="margin-top:16px">
+                        <div class="cms-field">
+                            <label>Plan Name</label>
+                            <input type="text" id="ap_name" placeholder="e.g. Annual Athlete Pass" required>
+                        </div>
+                        <div class="cms-field">
+                            <label>Monthly Price (₹)</label>
+                            <input type="number" id="ap_price" placeholder="2200" min="100" required>
+                        </div>
+                        <div class="cms-field">
+                            <label>Badge Tag (Optional)</label>
+                            <input type="text" id="ap_badge" placeholder="Best Value">
+                        </div>
+                        <div class="cms-field">
+                            <label>Included Features (One per line)</label>
+                            <textarea id="ap_features" rows="4" required placeholder="Full gym floor access&#10;Personal workout assessment&#10;Shower & locker use"></textarea>
+                        </div>
+                        <div class="cms-btn-row">
+                            <button type="submit" class="btn">Add Plan</button>
+                            <button type="button" class="btn g" onclick="closeM()">Cancel</button>
+                        </div>
+                    </form>
+                `);
+
+                $('#addPlanForm').onsubmit = e => {
+                    e.preventDefault();
+                    const newPlan = {
+                        name: $('#ap_name').value.trim(),
+                        price: +$('#ap_price').value,
+                        badge: $('#ap_badge').value.trim(),
+                        features: $('#ap_features').value.split('\n').map(x => x.trim()).filter(Boolean)
+                    };
+                    const s = CMSStore.getSettings();
+                    s.memberships.push(newPlan);
+                    CMSStore.saveSettings(s);
+                    applyPublicMemberships(s.memberships);
+                    closeM();
+                    toast(`Added "${newPlan.name}" plan!`);
+                    dash('pricing');
+                };
+            };
+
+            // Delete Plan
+            $$('[data-del-plan]').forEach(btn => {
+                btn.onclick = () => {
+                    const idx = +btn.dataset.delPlan;
+                    const pName = memberships[idx].name;
+                    modal(`
+                        <h3>Delete Plan "${pName}"?</h3>
+                        <p class="note">Are you sure you want to delete this membership plan from the website?</p>
+                        <div class="cms-btn-row" style="margin-top:20px">
+                            <button class="btn" id="confirmDelPlanBtn" style="background:#b91c1c; border-color:#b91c1c; color:#fff">Delete Plan</button>
+                            <button class="btn g" onclick="closeM()">Cancel</button>
+                        </div>
+                    `);
+                    $('#confirmDelPlanBtn').onclick = () => {
+                        const updatedPlans = memberships.filter((_, i) => i !== idx);
+                        const s = CMSStore.getSettings();
+                        s.memberships = updatedPlans;
+                        CMSStore.saveSettings(s);
+                        applyPublicMemberships(updatedPlans);
+                        closeM();
+                        toast(`Deleted "${pName}" plan.`);
+                        dash('pricing');
+                    };
+                };
+            });
+        }
+
+        // ============================================================
+        // SECTION 5: SOCIAL MEDIA LINKS MANAGER
+        // ============================================================
+        function renderSocialManager(container, social) {
+            container.innerHTML = `
+                <div class="cms-panel-title">
+                    <div>
+                        <h3>Social Media Management</h3>
+                        <p>Configure official club social handles linked in the website footer and contact channels.</p>
+                    </div>
+                </div>
+                <form class="cms-form" id="cmsSocialForm">
+                    <div class="cms-form-grid">
+                        <div class="cms-field full">
+                            <label>Instagram URL</label>
+                            <input type="url" id="s_instagram" value="${social.instagram || ''}" placeholder="https://instagram.com/mgwinnerfitness" required>
+                            <small>Official Instagram profile URL</small>
+                        </div>
+                        <div class="cms-field full">
+                            <label>Facebook URL</label>
+                            <input type="url" id="s_facebook" value="${social.facebook || ''}" placeholder="https://facebook.com/mgwinnerfitness" required>
+                            <small>Official Facebook page URL</small>
+                        </div>
+                        <div class="cms-field full">
+                            <label>YouTube Channel URL</label>
+                            <input type="url" id="s_youtube" value="${social.youtube || ''}" placeholder="https://youtube.com/@mgwinnerfitness" required>
+                            <small>Official YouTube channel URL for workout clips & gym tour</small>
+                        </div>
+                        <div class="cms-field full">
+                            <label>Twitter / X URL (Optional)</label>
+                            <input type="url" id="s_twitter" value="${social.twitter || ''}" placeholder="https://x.com/mgwinnerfitness">
+                        </div>
+                    </div>
+                    <div class="cms-btn-row">
+                        <button type="submit" class="btn">Save Social Links</button>
+                        <button type="button" class="btn g" id="cancelSocialBtn">Cancel</button>
+                    </div>
+                </form>
+            `;
+
+            $('#cmsSocialForm').onsubmit = e => {
+                e.preventDefault();
+                const updated = {
+                    instagram: $('#s_instagram').value.trim(),
+                    facebook: $('#s_facebook').value.trim(),
+                    youtube: $('#s_youtube').value.trim(),
+                    twitter: $('#s_twitter').value.trim()
+                };
+                const s = CMSStore.getSettings();
+                s.social = updated;
+                CMSStore.saveSettings(s);
+                applyPublicSocial(updated);
+                toast('Social media URLs saved and linked across the website!');
+                dash('social');
+            };
+
+            $('#cancelSocialBtn').onclick = () => {
+                dash('overview');
+            };
+        }
+
+        // Global Window Exports for CMS API and Integrations
+        window.CMSStore = CMSStore;
+        window.dash = dash;
+        window.applyPublicContact = applyPublicContact;
+        window.applyPublicSocial = applyPublicSocial;
+        window.applyPublicMemberships = applyPublicMemberships;
+        window.applyPublicGallery = applyPublicGallery;
+        window.initCMSPublicSync = initCMSPublicSync;
+
+        // Hash routing support for direct CMS panel access in client demos
+        function handleCMSHash() {
+            const h = window.location.hash;
+            if (h === '#cms' || h === '#cms-overview') {
+                dash('overview');
+            } else if (h === '#cms-contact') {
+                dash('contact');
+            } else if (h === '#cms-gallery') {
+                dash('gallery');
+            } else if (h === '#cms-pricing') {
+                dash('pricing');
+            } else if (h === '#cms-social') {
+                dash('social');
             }
         }
+        window.addEventListener('hashchange', handleCMSHash);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', handleCMSHash);
+        } else {
+            handleCMSHash();
+        }
+
 
         // Global Event Delegation
         document.addEventListener('click', e => {
