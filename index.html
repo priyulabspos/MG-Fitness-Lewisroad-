@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>MG Winner Fitness | Bhubaneswar's Premier Strength & Conditioning Club</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="icon" type="image/png" href="priyulabs-logo.png">
     <link rel="preload" as="image" href="landing-video-poster.jpg">
     <meta name="description" content="MG Winner Fitness in Bhubaneswar. Elite Being Strong equipment, certified personal coaches, bodybuilding, weight loss, and community fitness.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -268,22 +269,28 @@
             border: 1px solid rgba(16, 185, 129, 0.3);
         }
 
-        /* Preloader */
+        /* Preloader with CSS Auto-Failsafe */
         #pre {
             position: fixed;
             inset: 0;
-            background: var(--bg);
+            background: var(--bg, #fbfaf5);
             z-index: 9999;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: opacity 0.5s ease, visibility 0.5s ease;
+            animation: autoHidePreloader 2.5s 0.5s forwards;
         }
 
         #pre.out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
+            opacity: 0 !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+        }
+
+        @keyframes autoHidePreloader {
+            0%, 75% { opacity: 1; visibility: visible; }
+            100% { opacity: 0; visibility: hidden; pointer-events: none; }
         }
 
         #pre .loader-box {
@@ -4335,7 +4342,35 @@
             }
         }
         
-        <!-- Navigation Bar -->
+            </style>
+</head>
+
+<body>
+
+    <!-- SVG Icon Sprite with Logo Colors -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <symbol id="mk" viewBox="0 0 100 100">
+            <g fill="none" stroke-width="7">
+                <circle cx="50" cy="50" r="44" stroke="var(--logo-dark, #111827)" />
+                <path d="M50 6A44 44 0 0 1 94 50" stroke="#edb71e" />
+                <path d="M50 94A44 44 0 0 1 14 72" stroke="#edb71e" />
+                <path d="M29 71V31L46 56L63 31V71" stroke="var(--logo-dark, #111827)" stroke-linejoin="miter" />
+                <path d="M58 63H82" stroke="#edb71e" />
+            </g>
+        </symbol>
+    </svg>
+
+    <!-- Preloader with Failsafe -->
+    <div id="pre" aria-hidden="true">
+        <div class="loader-box">
+            <svg viewBox="0 0 100 100">
+                <use href="#mk" />
+            </svg>
+            <p>MG WINNER FITNESS</p>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
     <nav id="mainNav" class="navbar">
         <div class="w">
             <button class="lg" data-go="home" aria-label="MG Winner Fitness home">
@@ -5137,16 +5172,24 @@
         const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
         document.documentElement.classList.add('js');
 
-        // Preloader
-        const pre = $('#pre');
+        // Preloader & Multi-Layer Failsafe (on load + 2.5s failsafe)
+        const hideLoader = () => {
+            const p = document.getElementById('pre');
+            if (p) {
+                p.classList.add('out');
+                setTimeout(() => { if (p && p.parentNode) p.parentNode.removeChild(p); }, 400);
+            }
+        };
         let seen = false;
-        try { seen = sessionStorage.getItem('mgp') } catch (e) { }
+        try { seen = sessionStorage.getItem('mgp'); } catch (e) { }
         if (seen || matchMedia('(prefers-reduced-motion:reduce)').matches) {
-            pre && pre.remove();
+            hideLoader();
         } else {
-            try { sessionStorage.setItem('mgp', '1') } catch (e) { }
-            setTimeout(() => { if (pre) { pre.classList.add('out'); setTimeout(() => pre.remove(), 300); } }, 300);
+            try { sessionStorage.setItem('mgp', '1'); } catch (e) { }
+            setTimeout(hideLoader, 400);
         }
+        window.addEventListener('load', hideLoader);
+        setTimeout(hideLoader, 2500);
 
         // Scroll Progress Bar
         addEventListener('scroll', () => {
