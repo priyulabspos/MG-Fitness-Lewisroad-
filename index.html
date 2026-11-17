@@ -436,11 +436,11 @@
             transform: scale(1.01);
             will-change: transform;
             filter: contrast(1.05) brightness(1.02);
-            opacity: 0;
+            opacity: 1 !important;
             transition: opacity 0.5s ease;
         }
         .hero-video-bg.is-playing {
-            opacity: 1;
+            opacity: 1 !important;
         }
 
         /* 100% Clear Video: NO white haze! Gentle natural dark gradient only on the far-left text zone */
@@ -1050,32 +1050,39 @@
         }
 
         /* Programs Grid */
-        .pg {
+        .pg, .pcards {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 22px;
         }
 
-        .fc {
+        .pcard, .fc {
             perspective: 1000px;
+            -webkit-perspective: 1000px;
             height: 380px;
             cursor: pointer;
         }
 
-        .fc > div {
+        .pcard-in, .fc > div {
             position: relative;
             width: 100%;
             height: 100%;
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             border-radius: var(--radius-lg);
         }
 
-        .fc.on > div, .fc:hover > div {
+        @media (hover: hover) {
+            .pcard:hover .pcard-in, .fc:hover > div {
+                transform: rotateY(180deg);
+            }
+        }
+        .pcard.is-flipped .pcard-in, .fc.on > div, .fc.flipped > div {
             transform: rotateY(180deg);
         }
 
-        .fc .f, .fc .bk {
+        .pface, .fc .f, .fc .bk {
             position: absolute;
             inset: 0;
             backface-visibility: hidden;
@@ -1088,13 +1095,17 @@
             flex-direction: column;
             justify-content: space-between;
             box-shadow: var(--shadow-sm);
+            box-sizing: border-box;
         }
 
-        .fc .f {
+        .pfront, .fc .f {
             background: #ffffff;
         }
+        .pfront * {
+            pointer-events: none;
+        }
 
-        .fc .f .pp {
+        .pfront img.pp, .fc .f .pp {
             position: absolute;
             inset: 0;
             width: 100%;
@@ -1105,11 +1116,13 @@
             transition: transform 0.6s ease;
         }
 
-        .fc:hover .f .pp {
-            transform: scale(1.08);
+        @media (hover: hover) {
+            .pcard:hover .pfront img.pp, .fc:hover .f .pp {
+                transform: scale(1.08);
+            }
         }
 
-        .fc .f .f-content {
+        .pfront .f-content, .fc .f .f-content {
             position: relative;
             z-index: 1;
             height: 100%;
@@ -1119,7 +1132,7 @@
             color: #ffffff;
         }
 
-        .fc .f .n {
+        .pfront .n, .fc .f .n {
             font: 800 20px 'Barlow Condensed', sans-serif;
             color: #111;
             background: var(--gold);
@@ -1129,19 +1142,23 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .fc .f h3 {
+        .pfront .flip-hint {
+            display: none;
+        }
+
+        .pfront h3, .fc .f h3 {
             font-size: 28px;
             margin-bottom: 6px;
             color: #ffffff;
         }
 
-        .fc .f p.ds {
+        .pfront p.ds, .fc .f p.ds {
             color: var(--gold-light);
             font-size: 14px;
             font-weight: 600;
         }
 
-        .fc .bk {
+        .pback, .fc .bk {
             background: #ffffff;
             transform: rotateY(180deg);
             border-color: var(--border-gold);
@@ -1149,13 +1166,16 @@
             text-align: center;
             gap: 16px;
         }
+        .pback a, .pback button {
+            pointer-events: auto;
+        }
 
-        .fc .bk h3 {
+        .pback h3, .fc .bk h3 {
             font-size: 26px;
             color: var(--gold-dark);
         }
 
-        .fc .bk p {
+        .pback p, .fc .bk p {
             color: var(--text-muted);
             font-size: 15px;
             line-height: 1.6;
@@ -2189,6 +2209,13 @@
 
 
         @media (max-width: 768px) {
+            /* Touch & mobile cursor cleanup */
+        @media (hover: none), (pointer: coarse), (max-width: 768px) {
+            * {
+                cursor: auto !important;
+            }
+        }
+
             /* --- Base & Typography --- */
             html, body {
                 overflow-x: hidden !important;
@@ -2280,7 +2307,7 @@
             .mq {
                 display: none !important;
             }
-            .card-fac, .tr-card, .q-card, .fc, .tk {
+            .card-fac, .tr-card, .q-card, .tk {
                 transform: none !important;
                 box-shadow: 0 2px 12px rgba(27, 24, 18, 0.04) !important;
             }
@@ -2847,7 +2874,7 @@
             }
 
             /* --- Programs Swipe Flip Cards --- */
-            #pg {
+            #pg, .pg, .pcards {
                 display: flex !important;
                 flex-direction: row !important;
                 overflow-x: auto !important;
@@ -2855,17 +2882,17 @@
                 -webkit-overflow-scrolling: touch !important;
                 overscroll-behavior-x: contain !important;
                 gap: 14px !important;
-                padding-inline: 20px !important;
+                padding: 4px 20px 20px !important;
                 scroll-padding-inline: 20px !important;
                 margin-left: -20px !important;
                 margin-right: -20px !important;
                 scrollbar-width: none !important;
                 touch-action: pan-x pan-y !important;
             }
-            #pg::-webkit-scrollbar {
+            #pg::-webkit-scrollbar, .pg::-webkit-scrollbar, .pcards::-webkit-scrollbar {
                 display: none !important;
             }
-            .fc {
+            .pcard, .fc {
                 flex: 0 0 78% !important;
                 width: 78% !important;
                 min-width: 78% !important;
@@ -2882,24 +2909,23 @@
                 box-shadow: none !important;
                 cursor: pointer !important;
                 box-sizing: border-box !important;
+                padding: 0 !important;
+                transform: none !important;
             }
-            .fc > div {
+            .pcard-in, .fc > div {
                 position: relative !important;
                 width: 100% !important;
                 height: 100% !important;
                 transform-style: preserve-3d !important;
                 -webkit-transform-style: preserve-3d !important;
-                transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
+                transition: transform .7s cubic-bezier(.3, .7, .2, 1) !important;
                 border-radius: 0 !important;
                 overflow: visible !important;
             }
-            .fc.flipped > div, .fc.on > div {
+            .pcard.is-flipped .pcard-in, .fc.flipped > div, .fc.is-flipped > div, .fc.on > div {
                 transform: rotateY(180deg) !important;
             }
-            .fc:hover > div {
-                transform: none !important;
-            }
-            .fc .f, .fc .bk {
+            .pface, .fc .f, .fc .bk {
                 position: absolute !important;
                 inset: 0 !important;
                 backface-visibility: hidden !important;
@@ -2909,7 +2935,7 @@
                 box-sizing: border-box !important;
             }
             /* FRONT FACE */
-            .fc .f {
+            .pfront, .fc .f {
                 display: block !important;
                 padding: 0 !important;
                 background: #111111 !important;
@@ -2917,7 +2943,7 @@
                 box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
                 cursor: pointer !important;
             }
-            .fc .f::before {
+            .pfront::before, .fc .f::before {
                 content: "" !important;
                 position: absolute !important;
                 inset: 0 !important;
@@ -2925,10 +2951,13 @@
                 z-index: 1 !important;
                 pointer-events: none !important;
             }
-            .fc .f::after {
+            .pfront::after, .fc .f::after {
                 display: none !important;
             }
-            .fc .f img.pp {
+            .pfront * {
+                pointer-events: none !important;
+            }
+            .pfront img.pp, .fc .f img.pp {
                 position: absolute !important;
                 inset: 0 !important;
                 width: 100% !important;
@@ -2941,7 +2970,7 @@
                 display: block !important;
                 margin: 0 !important;
             }
-            .fc .f .f-content {
+            .pfront .f-content, .fc .f .f-content {
                 position: relative !important;
                 z-index: 2 !important;
                 height: 100% !important;
@@ -2952,7 +2981,7 @@
                 box-sizing: border-box !important;
                 color: #ffffff !important;
             }
-            .fc .f .n {
+            .pfront .n, .fc .f .n {
                 display: inline-flex !important;
                 font: 800 15px 'Barlow Condensed', sans-serif !important;
                 color: #111111 !important;
@@ -2962,7 +2991,7 @@
                 align-self: flex-start !important;
                 box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
             }
-            .fc .f .flip-hint {
+            .pfront .flip-hint, .fc .f .flip-hint {
                 display: inline-flex !important;
                 align-items: center !important;
                 gap: 5px !important;
@@ -2976,14 +3005,14 @@
                 border-radius: 999px !important;
                 border: 1px solid rgba(255, 255, 255, 0.25) !important;
             }
-            .fc .f h3 {
+            .pfront h3, .fc .f h3 {
                 font-size: 20px !important;
                 font-weight: 700 !important;
                 color: #ffffff !important;
                 margin: 0 0 4px 0 !important;
                 text-shadow: 0 2px 4px rgba(0,0,0,0.6) !important;
             }
-            .fc .f p.ds {
+            .pfront p.ds, .fc .f p.ds {
                 font-size: 13px !important;
                 color: #edb71e !important;
                 margin: 0 !important;
@@ -2991,7 +3020,7 @@
                 text-shadow: 0 1px 3px rgba(0,0,0,0.6) !important;
             }
             /* BACK FACE */
-            .fc .bk {
+            .pback, .fc .bk {
                 position: absolute !important;
                 inset: 0 !important;
                 background: #181512 !important;
@@ -3009,15 +3038,19 @@
                 box-sizing: border-box !important;
                 max-height: none !important;
                 opacity: 1 !important;
+                color: #cfc7b2 !important;
             }
-            .fc .bk h3 {
+            .pback a, .pback button, .fc .bk a, .fc .bk button {
+                pointer-events: auto !important;
+            }
+            .pback h3, .fc .bk h3 {
                 display: block !important;
                 font-size: 20px !important;
                 font-weight: 700 !important;
                 color: #edb71e !important;
                 margin: 0 0 8px 0 !important;
             }
-            .fc .bk p {
+            .pback p, .fc .bk p {
                 font-size: 15px !important;
                 line-height: 1.55 !important;
                 color: #cfc7b2 !important;
@@ -3027,7 +3060,7 @@
                 align-items: center !important;
                 justify-content: center !important;
             }
-            .fc .bk .btn {
+            .pback .btn, .fc .bk .btn {
                 width: 100% !important;
                 height: 44px !important;
                 border-radius: 10px !important;
@@ -3663,7 +3696,7 @@
     <header class="hero" id="home">
         <!-- Background Video with FastStart (100% Visible, No White Haze, 0 Buffering) -->
         <div class="hero-video-wrap">
-            <video id="heroBgVideo" class="hero-video-bg" autoplay loop muted playsinline preload="auto" poster="landing-video-poster.jpg">
+            <video id="heroBgVideo" class="hero-video-bg is-playing" autoplay loop muted playsinline webkit-playsinline preload="auto" poster="landing-video-poster.jpg">
                 <source src="hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)">
                 <source src="landing-faststart.mp4" type="video/mp4">
                 <source src="MG%20Winner%20gym%20landing%20video.mp4" type="video/mp4">
@@ -4012,7 +4045,7 @@
                 <p>Tap a card to flip it.</p>
             </div>
 
-            <div class="pg" id="pg"></div>
+            <div class="pg pcards" id="pg"></div>
             <div class="prog-dots" id="progDots" role="tablist" aria-label="Program cards pagination"></div>
         </div>
     </section>
@@ -4544,10 +4577,12 @@
         ];
 
         function renderPrograms() {
-            $('#pg').innerHTML = PG_DATA.map((p, i) => `
-                <div class="fc" tabindex="0">
-                    <div>
-                        <div class="f">
+            const container = $('#pg');
+            if (!container) return;
+            container.innerHTML = PG_DATA.map((p, i) => `
+                <article class="pcard" tabindex="0" data-idx="${i}">
+                    <div class="pcard-in">
+                        <div class="pface pfront">
                             <img class="pp" alt="${p.title} at MG Winner Fitness" src="${p.img}">
                             <div class="f-content">
                                 <div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;">
@@ -4563,42 +4598,51 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="bk">
-                            <h3>${p.title}</h3>
-                            <p>${p.desc}</p>
-                            <button class="btn sm" data-join="${p.title}">Enquire Now</button>
+                        <div class="pface pback">
+                            <div>
+                                <h3>${p.title}</h3>
+                                <p>${p.desc}</p>
+                            </div>
+                            <button type="button" class="btn sm" data-join="${p.title}">Enquire Now</button>
                         </div>
                     </div>
-                </div>
+                </article>
             `).join('');
 
-            const cards = $$('.fc');
-            cards.forEach(c => {
-                c.addEventListener('click', e => {
-                    if (e.target.closest('button')) return;
-                    const willFlip = !c.classList.contains('flipped');
-                    cards.forEach(other => other.classList.remove('flipped', 'on'));
-                    if (willFlip) {
-                        c.classList.add('flipped', 'on');
+            const cards = $$('.pcard');
+            cards.forEach(card => {
+                let startX = 0, startY = 0, isDragging = false;
+                card.addEventListener('pointerdown', e => {
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    isDragging = false;
+                });
+                card.addEventListener('pointermove', e => {
+                    if (Math.abs(e.clientX - startX) > 8 || Math.abs(e.clientY - startY) > 8) {
+                        isDragging = true;
                     }
                 });
-                c.addEventListener('keydown', e => {
+                card.addEventListener('click', e => {
+                    if (isDragging) return;
+                    if (e.target.closest('a, button')) return;
+                    const open = !card.classList.contains('is-flipped');
+                    cards.forEach(c => c.classList.remove('is-flipped'));
+                    card.classList.toggle('is-flipped', open);
+                });
+                card.addEventListener('keydown', e => {
                     if (e.key === 'Enter' || e.key === ' ') {
-                        if (e.target.closest('button')) return;
+                        if (e.target.closest('a, button')) return;
                         e.preventDefault();
-                        const willFlip = !c.classList.contains('flipped');
-                        cards.forEach(other => other.classList.remove('flipped', 'on'));
-                        if (willFlip) {
-                            c.classList.add('flipped', 'on');
-                        }
+                        const open = !card.classList.contains('is-flipped');
+                        cards.forEach(c => c.classList.remove('is-flipped'));
+                        card.classList.toggle('is-flipped', open);
                     }
                 });
             });
 
             // Program Carousel Pagination
-            const pgScroller = $('#pg');
             const pgDots = $('#progDots');
-            if (pgScroller && pgDots) {
+            if (pgDots) {
                 pgDots.innerHTML = cards.map((_, idx) => `
                     <button type="button" class="prog-dot${idx === 0 ? ' on' : ''}" data-idx="${idx}" aria-label="Go to program ${idx + 1}" role="tab" aria-selected="${idx === 0 ? 'true' : 'false'}"></button>
                 `).join('');
@@ -4626,7 +4670,7 @@
                                 }
                             }
                         });
-                    }, { root: pgScroller, threshold: 0.6 });
+                    }, { root: container, threshold: 0.6 });
 
                     cards.forEach(c => obs.observe(c));
                 }
@@ -5264,24 +5308,6 @@
                     syncMobilePlans();
                 });
             });
-
-            // Programs Accordion (single open at a time on mobile)
-            function initProgramAccordion() {
-                const pCards = $$('#pg .fc');
-                pCards.forEach(card => {
-                    const trigger = card.querySelector('.f');
-                    if (!trigger) return;
-                    trigger.addEventListener('click', (e) => {
-                        if (window.innerWidth <= 768) {
-                            e.stopPropagation();
-                            const isOpen = card.classList.contains('open');
-                            pCards.forEach(c => c.classList.remove('open'));
-                            if (!isOpen) card.classList.add('open');
-                        }
-                    });
-                });
-            }
-            initProgramAccordion();
 
             // Facility Photos Carousel & Lightbox Controller (Mobile)
             const glScroller = $('.gl');
