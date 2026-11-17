@@ -4165,10 +4165,8 @@
         <!-- Background Video with FastStart (100% Visible, No White Haze, 0 Buffering) -->
         <div class="hero-video-wrap">
             <video id="heroBgVideo" class="hero-video-bg is-playing" autoplay loop muted playsinline webkit-playsinline preload="auto" poster="landing-video-poster.jpg">
-                <source src="hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)">
-                <source src="landing-faststart.mp4" type="video/mp4">
+                                <source src="landing-faststart.mp4" type="video/mp4">
                 <source src="MG%20Winner%20gym%20landing%20video.mp4" type="video/mp4">
-                <source src="MG Winner gym landing video.mp4" type="video/mp4">
             </video>
             <div class="hero-video-overlay"></div>
         </div>
@@ -5688,23 +5686,31 @@
             toast(heroVid.muted ? 'Background video muted' : 'Background video audio unmuted');
         }
 
-        // Guaranteed smooth zero-lag autoplay
+        // Guaranteed smooth zero-lag autoplay on desktop & mobile
         if (heroVid) {
             heroVid.muted = true;
-            const playPromise = heroVid.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {
-                    // Autoplay with sound or interaction was blocked, ensure muted play
+            heroVid.playsInline = true;
+            heroVid.setAttribute('playsinline', '');
+            heroVid.setAttribute('webkit-playsinline', '');
+            heroVid.setAttribute('muted', '');
+
+            const playHeroVideo = () => {
+                if (heroVid.paused) {
                     heroVid.muted = true;
                     heroVid.play().catch(() => {});
-                });
-            }
-            // Trigger play on first scroll or touch
-            ['click', 'touchstart', 'scroll'].forEach(evt => {
-                window.addEventListener(evt, () => {
-                    if (heroVid.paused) heroVid.play().catch(() => {});
-                }, { once: true, passive: true });
+                }
+            };
+
+            playHeroVideo();
+
+            ['click', 'touchstart', 'scroll', 'touchend'].forEach(evt => {
+                window.addEventListener(evt, playHeroVideo, { once: true, passive: true });
             });
+
+            document.addEventListener('visibilitychange', () => {
+                if (!document.hidden && heroVid.paused) playHeroVideo();
+            });
+            window.addEventListener('pageshow', playHeroVideo);
         }
 
     
