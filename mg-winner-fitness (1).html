@@ -1836,6 +1836,60 @@
             font-size: 13.5px;
         }
 
+        /* --- PriyuLabs Attribution Badge --- */
+        .priyulabs-badge-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 16px;
+            width: 100%;
+        }
+        .priyulabs-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 9999px;
+            background: rgba(17, 24, 39, 0.05);
+            border: 1px solid rgba(17, 24, 39, 0.12);
+            color: #4b5563;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-size: 12.5px;
+            font-weight: 500;
+            line-height: 1;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .priyulabs-badge:hover {
+            background: rgba(17, 24, 39, 0.09);
+            border-color: rgba(237, 183, 30, 0.6);
+            color: #111827;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .priyulabs-badge img {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            object-fit: contain;
+            display: block;
+            flex-shrink: 0;
+            background: #ffffff;
+        }
+        .priyulabs-badge span {
+            display: inline-block;
+            white-space: nowrap;
+        }
+        .priyulabs-badge strong {
+            font-weight: 700;
+            color: #111827;
+            letter-spacing: 0.01em;
+        }
+
         /* Modal Overlay & Dialog */
         .ov {
             position: fixed;
@@ -3563,6 +3617,26 @@
                 color: #8f8674 !important;
                 text-align: center !important;
             }
+            footer .priyulabs-badge-wrap {
+                margin-top: 14px !important;
+                padding-bottom: 4px !important;
+            }
+            footer .priyulabs-badge {
+                background: rgba(255, 255, 255, 0.08) !important;
+                border-color: rgba(255, 255, 255, 0.15) !important;
+                color: #cfc7b2 !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+            }
+            footer .priyulabs-badge strong {
+                color: #f6f1e6 !important;
+            }
+            footer .priyulabs-badge:hover,
+            footer .priyulabs-badge:active {
+                background: rgba(255, 255, 255, 0.14) !important;
+                border-color: rgba(237, 183, 30, 0.5) !important;
+                color: #ffffff !important;
+                transform: translateY(-1px) !important;
+            }
 
             /* --- Bottom Action Bar --- */
             .bottom-action-bar {
@@ -3619,6 +3693,399 @@
             }
         }
 
+
+        
+        /* ============================================================
+           REBUILT RESPONSIVE NAVBAR & MOBILE NAVIGATION (768px BREAKPOINT)
+           ============================================================ */
+        html.nav-locked, body.nav-locked {
+            overflow: hidden !important;
+            touch-action: none !important;
+        }
+
+        /* Fixed navbar clearance for smooth navigation */
+        html {
+            scroll-behavior: smooth;
+        }
+        header.hero,
+        section.sec,
+        #home,
+        #about,
+        #facilities,
+        #reels,
+        #programs,
+        #memberships,
+        #trainers,
+        #contact,
+        #faq {
+            scroll-margin-top: 84px !important;
+        }
+
+        /* ------------------------------------------------------------
+           DESKTOP NAVBAR (769px and above)
+           100% Identical to original desktop layout
+           ------------------------------------------------------------ */
+        @media (min-width: 769px) {
+            nav#mainNav,
+            nav.navbar {
+                display: flex !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                height: 74px !important;
+                z-index: 100 !important;
+                background: rgba(251, 250, 245, 0.92) !important;
+                backdrop-filter: blur(18px) !important;
+                -webkit-backdrop-filter: blur(18px) !important;
+                border-bottom: 1px solid var(--border) !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+            }
+            nav#mainNav .w,
+            nav.navbar .w {
+                width: 100% !important;
+                max-width: 1220px !important;
+                margin: 0 auto !important;
+                padding: 0 24px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                box-sizing: border-box !important;
+            }
+            nav#mainNav .lg,
+            nav.navbar .lg {
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
+                background: none !important;
+                border: none !important;
+                cursor: pointer !important;
+            }
+            nav#mainNav .lk,
+            nav.navbar .lk {
+                display: flex !important;
+                align-items: center !important;
+                gap: 28px !important;
+            }
+            nav#mainNav .lk a,
+            nav.navbar .lk a {
+                font-size: 15px !important;
+                font-weight: 600 !important;
+                color: var(--text-muted) !important;
+                transition: color 0.2s ease !important;
+                cursor: pointer !important;
+            }
+            nav#mainNav .lk a:hover,
+            nav.navbar .lk a:hover {
+                color: var(--gold-dark) !important;
+            }
+            nav#mainNav .bg,
+            nav.navbar .bg {
+                display: none !important;
+            }
+            .nav-overlay,
+            .mobile-sheet {
+                display: none !important;
+            }
+        }
+
+        /* ------------------------------------------------------------
+           MOBILE NAVBAR & DRAWER (768px and below)
+           Clean, full-width, hamburger + drawer
+           ------------------------------------------------------------ */
+        @media (max-width: 768px) {
+            header.hero,
+            section.sec,
+            #home,
+            #about,
+            #facilities,
+            #reels,
+            #programs,
+            #memberships,
+            #trainers,
+            #contact,
+            #faq {
+                scroll-margin-top: 74px !important;
+            }
+
+            /* Main Header Bar on Mobile */
+            nav#mainNav,
+            nav.navbar {
+                display: flex !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+                height: 64px !important;
+                z-index: 100 !important;
+                padding: env(safe-area-inset-top, 0px) 16px 0 !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                box-sizing: border-box !important;
+                background: linear-gradient(180deg, rgba(13, 15, 20, 0.92) 0%, rgba(13, 15, 20, 0.6) 70%, transparent 100%) !important;
+                border-bottom: 1px solid transparent !important;
+                transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
+            }
+            nav#mainNav.scrolled,
+            nav.navbar.scrolled {
+                background: rgba(246, 241, 230, 0.98) !important;
+                backdrop-filter: blur(14px) !important;
+                -webkit-backdrop-filter: blur(14px) !important;
+                border-bottom: 1px solid #e2d9c6 !important;
+                box-shadow: 0 2px 14px rgba(27, 24, 18, 0.06) !important;
+            }
+
+            /* Container takes 100% of header bar */
+            nav#mainNav .w,
+            nav.navbar .w {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Logo: Visible & crisp on left */
+            nav#mainNav .lg,
+            nav.navbar .lg {
+                display: flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+                background: none !important;
+                border: none !important;
+                padding: 0 !important;
+                cursor: pointer !important;
+                flex-shrink: 0 !important;
+            }
+            nav#mainNav .lg svg,
+            nav.navbar .lg svg {
+                width: 36px !important;
+                height: 36px !important;
+            }
+            nav#mainNav .lg span b,
+            nav.navbar .lg span b {
+                font: 800 20px 'Barlow Condensed', sans-serif !important;
+                letter-spacing: 0.04em !important;
+                color: #ffffff !important;
+                text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8) !important;
+            }
+            nav#mainNav.scrolled .lg span b,
+            nav.navbar.scrolled .lg span b {
+                color: #111827 !important;
+                text-shadow: none !important;
+            }
+            nav#mainNav .lg span small,
+            nav.navbar .lg span small {
+                font: 800 10px 'Barlow Condensed', sans-serif !important;
+                letter-spacing: 0.3em !important;
+                color: #edb71e !important;
+                text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+            }
+            nav#mainNav.scrolled .lg span small,
+            nav.navbar.scrolled .lg span small {
+                color: #b89a5a !important;
+                text-shadow: none !important;
+            }
+
+            /* Hide Desktop Links Completely */
+            nav#mainNav .lk,
+            nav.navbar .lk,
+            nav .lk,
+            .lk {
+                display: none !important;
+            }
+
+            /* Visible Hamburger Button on right */
+            nav#mainNav .bg,
+            nav.navbar .bg,
+            nav .bg,
+            .bg {
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 5px !important;
+                width: 44px !important;
+                height: 44px !important;
+                min-width: 44px !important;
+                min-height: 44px !important;
+                background: rgba(255, 255, 255, 0.15) !important;
+                backdrop-filter: blur(8px) !important;
+                -webkit-backdrop-filter: blur(8px) !important;
+                border: 1px solid rgba(255, 255, 255, 0.35) !important;
+                border-radius: 8px !important;
+                cursor: pointer !important;
+                padding: 0 !important;
+                color: #ffffff !important;
+                transition: all 0.3s ease !important;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+                flex-shrink: 0 !important;
+            }
+            nav#mainNav.scrolled .bg,
+            nav.navbar.scrolled .bg {
+                background: rgba(27, 24, 18, 0.05) !important;
+                border-color: #e2d9c6 !important;
+                color: #1b1812 !important;
+                box-shadow: none !important;
+            }
+            nav#mainNav .bg i,
+            nav.navbar .bg i,
+            nav .bg i,
+            .bg i {
+                display: block !important;
+                width: 22px !important;
+                height: 2px !important;
+                background: currentColor !important;
+                border-radius: 2px !important;
+                transition: transform 0.3s ease, opacity 0.3s ease !important;
+            }
+            nav#mainNav .bg.on i:first-child,
+            nav.navbar .bg.on i:first-child,
+            nav .bg.on i:first-child,
+            .bg.on i:first-child {
+                transform: translateY(3.5px) rotate(45deg) !important;
+            }
+            nav#mainNav .bg.on i:last-child,
+            nav.navbar .bg.on i:last-child,
+            nav .bg.on i:last-child,
+            .bg.on i:last-child {
+                transform: translateY(-3.5px) rotate(-45deg) !important;
+            }
+
+            /* Backdrop Overlay */
+            .nav-overlay {
+                display: block;
+                position: fixed;
+                inset: 0;
+                z-index: 140;
+                background: rgba(0, 0, 0, 0.72);
+                backdrop-filter: blur(4px);
+                -webkit-backdrop-filter: blur(4px);
+                opacity: 0;
+                visibility: hidden;
+                pointer-events: none;
+                transition: opacity 0.3s ease, visibility 0.3s ease;
+            }
+            .nav-overlay.on {
+                opacity: 1;
+                visibility: visible;
+                pointer-events: auto;
+            }
+
+            /* Fullscreen Mobile Drawer Sheet */
+            .mobile-sheet {
+                display: flex !important;
+                position: fixed !important;
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                max-width: 100vw !important;
+                z-index: 150 !important;
+                background: #14120e !important;
+                color: #f6f1e6 !important;
+                flex-direction: column !important;
+                padding: calc(16px + env(safe-area-inset-top, 0px)) 24px calc(24px + env(safe-area-inset-bottom, 0px)) !important;
+                transform: translateY(-100%) !important;
+                visibility: hidden !important;
+                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s 0.35s !important;
+                overflow-y: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                box-sizing: border-box !important;
+            }
+            .mobile-sheet.on {
+                transform: translateY(0) !important;
+                visibility: visible !important;
+                transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            }
+
+            /* Drawer Close Button */
+            .mobile-sheet-close {
+                align-self: flex-end !important;
+                width: 44px !important;
+                height: 44px !important;
+                font-size: 34px !important;
+                font-weight: 300 !important;
+                background: none !important;
+                border: none !important;
+                color: #f6f1e6 !important;
+                cursor: pointer !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                margin-bottom: 8px !important;
+            }
+
+            /* Mobile Navigation Links Container (Vertical Stack) */
+            .mobile-sheet-nav,
+            #mobileSheetNav {
+                position: static !important;
+                width: 100% !important;
+                height: auto !important;
+                display: flex !important;
+                flex-direction: column !important;
+                margin: auto 0 !important;
+                background: none !important;
+                border: none !important;
+                padding: 0 !important;
+                box-sizing: border-box !important;
+                box-shadow: none !important;
+            }
+
+            /* Individual Mobile Nav Links */
+            .mobile-sheet-nav a,
+            #mobileSheetNav a {
+                display: flex !important;
+                align-items: center !important;
+                font-family: 'Barlow Condensed', sans-serif !important;
+                font-size: 26px !important;
+                font-weight: 600 !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.04em !important;
+                padding: 12px 0 !important;
+                color: #f6f1e6 !important;
+                text-decoration: none !important;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+                min-height: 48px !important;
+                box-sizing: border-box !important;
+                transition: color 0.2s ease, padding-left 0.2s ease !important;
+            }
+            .mobile-sheet-nav a:hover,
+            .mobile-sheet-nav a:active,
+            #mobileSheetNav a:hover,
+            #mobileSheetNav a:active {
+                color: var(--gold) !important;
+                padding-left: 8px !important;
+            }
+
+            /* Mobile Viewport Width: Full width, no narrow box */
+            html, body {
+                width: 100% !important;
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+                margin: 0 !important;
+                padding-left: 0 !important;
+                padding-right: 0 !important;
+            }
+            .w {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding-left: 16px !important;
+                padding-right: 16px !important;
+                box-sizing: border-box !important;
+            }
+            header.hero {
+                width: 100% !important;
+                max-width: 100vw !important;
+                box-sizing: border-box !important;
+            }
+        }
     </style>
 </head>
 
@@ -3648,7 +4115,7 @@
     </div>
 
     <!-- Navigation Bar -->
-    <nav>
+    <nav id="mainNav" class="navbar">
         <div class="w">
             <button class="lg" data-go="home" aria-label="MG Winner Fitness home">
                 <svg viewBox="0 0 100 100">
@@ -3676,9 +4143,10 @@
     </nav>
 
     <!-- Mobile Fullscreen Menu Sheet (Mobile Only) -->
+    <div class="nav-overlay" id="navOverlay" aria-hidden="true"></div>
     <div class="mobile-sheet" id="mobileSheet" aria-hidden="true">
         <button class="mobile-sheet-close" id="mobileSheetClose" aria-label="Close menu">&times;</button>
-        <nav class="mobile-sheet-nav">
+        <div class="mobile-sheet-nav" id="mobileSheetNav">
             <a href="#home" data-go="home">Home</a>
             <a href="#about" data-go="about">About</a>
             <a href="#facilities" data-go="facilities">Floor & Equipment</a>
@@ -3687,8 +4155,8 @@
             <a href="#memberships" data-go="memberships">Memberships</a>
             <a href="#trainers" data-go="trainers">Coaches</a>
             <a href="#contact" data-go="contact">Visit Us</a>
-            <button class="btn" data-auth style="margin-top: 22px; width: 100%;">Member Login</button>
-        </nav>
+            <button class="btn" data-login style="margin-top: 22px; width: 100%;">Login</button>
+        </div>
     </div>
 
 
@@ -4406,6 +4874,12 @@
 
             <div class="cp">
                 © 2026 MG Winner Fitness. All rights reserved. Bhubaneswar, Odisha. Official Being Strong Facility.
+                <div class="priyulabs-badge-wrap">
+                    <a href="https://priyulabs.in/" target="_blank" rel="noopener noreferrer" class="priyulabs-badge" aria-label="Powered by PriyuLabs">
+                        <img src="priyulabs-logo.png" alt="PriyuLabs Logo" width="18" height="18" loading="lazy">
+                        <span>Powered by <strong>PriyuLabs</strong></span>
+                    </a>
+                </div>
             </div>
         </div>
     </footer>
@@ -4449,10 +4923,7 @@
             pre && pre.remove();
         } else {
             try { sessionStorage.setItem('mgp', '1') } catch (e) { }
-            setTimeout(() => {
-                pre.classList.add('out');
-                setTimeout(() => pre.remove(), 500);
-            }, 1200);
+            setTimeout(() => { if (pre) { pre.classList.add('out'); setTimeout(() => pre.remove(), 300); } }, 300);
         }
 
         // Scroll Progress Bar
@@ -4489,7 +4960,9 @@
         function go(id) {
             closeDash();
             closeM();
-            $('#lk').classList.remove('on');
+            if (typeof toggleMobileMenu === 'function') toggleMobileMenu(false);
+            const lk = $('#lk');
+            if (lk) lk.classList.remove('on');
             const e = document.getElementById(id);
             if (e) {
                 e.scrollIntoView({ behavior: 'smooth' });
@@ -5171,7 +5644,7 @@
             }
         };
 
-        $('#bg').onclick = () => $('#lk').classList.toggle('on');
+        // Mobile menu toggle is handled in initMobileFeatures below
 
         $('#cf').onsubmit = e => {
             e.preventDefault();
@@ -5254,31 +5727,48 @@
             window.addEventListener('scroll', onScrollMobile, { passive: true });
             onScrollMobile();
 
-            // Mobile Fullscreen Menu Toggle
+            // Mobile Fullscreen Menu Toggle & Backdrop Overlay
             const mobileBtn = $('#bg');
             const mobileSheet = $('#mobileSheet');
             const mobileClose = $('#mobileSheetClose');
+            const navOverlay = $('#navOverlay');
 
-            function toggleMobileMenu(open) {
+            window.toggleMobileMenu = function(open) {
                 if (!mobileSheet) return;
                 mobileSheet.classList.toggle('on', open);
                 mobileSheet.setAttribute('aria-hidden', !open);
-                if (mobileBtn) mobileBtn.setAttribute('aria-expanded', open);
+                if (navOverlay) navOverlay.classList.toggle('on', open);
+                if (mobileBtn) {
+                    mobileBtn.setAttribute('aria-expanded', open);
+                    mobileBtn.classList.toggle('on', open);
+                }
+                document.documentElement.classList.toggle('nav-locked', open);
+                document.body.classList.toggle('nav-locked', open);
                 document.documentElement.classList.toggle('lock', open);
-            }
+            };
 
             if (mobileBtn) {
-                mobileBtn.addEventListener('click', () => {
+                mobileBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
                     const isOpen = mobileSheet && mobileSheet.classList.contains('on');
-                    toggleMobileMenu(!isOpen);
+                    window.toggleMobileMenu(!isOpen);
                 });
             }
             if (mobileClose) {
-                mobileClose.addEventListener('click', () => toggleMobileMenu(false));
+                mobileClose.addEventListener('click', () => window.toggleMobileMenu(false));
             }
+            if (navOverlay) {
+                navOverlay.addEventListener('click', () => window.toggleMobileMenu(false));
+            }
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    window.toggleMobileMenu(false);
+                    if (typeof closeM === 'function') closeM();
+                }
+            });
             // Close mobile menu on clicking any navigation link
             $$('.mobile-sheet-nav a, .mobile-sheet-nav button').forEach(link => {
-                link.addEventListener('click', () => toggleMobileMenu(false));
+                link.addEventListener('click', () => window.toggleMobileMenu(false));
             });
 
             // Membership Mobile Plan Tabs (Basic, Pro Athlete, Elite VIP)
