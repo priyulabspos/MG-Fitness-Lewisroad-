@@ -408,7 +408,13 @@
         /* Hero with Full Entire Screen Background Video */
         .hero {
             position: relative;
+            overflow: hidden;
+            max-width: 100%;
+            overflow: hidden;
+            max-width: 100%;
             min-height: 100vh;
+            min-height: 100dvh;
+            min-height: 100dvh;
             width: 100%;
             display: flex;
             align-items: center;
@@ -419,6 +425,10 @@
 
         .hero-video-wrap {
             position: absolute;
+            overflow: hidden;
+            max-width: 100%;
+            overflow: hidden;
+            max-width: 100%;
             inset: 0;
             width: 100%;
             height: 100%;
@@ -433,7 +443,7 @@
             height: 100%;
             object-fit: cover;
             object-position: center center;
-            transform: scale(1.01);
+            transform: scale(1.001); max-width: 100%;
             will-change: transform;
             filter: contrast(1.05) brightness(1.02);
             opacity: 1 !important;
@@ -655,6 +665,9 @@
         /* Marquee Ticker */
         .mq {
             background: #ffffff;
+            overflow: hidden !important;
+            max-width: 100% !important;
+            contain: paint !important;
             border-block: 1px solid var(--border);
             padding: 18px 0;
             overflow: hidden;
@@ -965,7 +978,7 @@
             opacity: 1;
         }
 
-        @media (hover: none), (max-width: 768px) {
+        @media (hover: none), (pointer: coarse), (max-width: 1100px) {
             .reel-toggle-btn {
                 opacity: 1;
             }
@@ -1073,7 +1086,7 @@
             border-radius: var(--radius-lg);
         }
 
-        @media (hover: hover) {
+        @media (hover: hover) and (pointer: fine) {
             .pcard:hover .pcard-in, .fc:hover > div {
                 transform: rotateY(180deg);
             }
@@ -1116,7 +1129,7 @@
             transition: transform 0.6s ease;
         }
 
-        @media (hover: hover) {
+        @media (hover: hover) and (pointer: fine) {
             .pcard:hover .pfront img.pp, .fc:hover .f .pp {
                 transform: scale(1.08);
             }
@@ -2232,24 +2245,291 @@
             display: none;
         }
     
-@media (max-width: 1024px) {
-            .hg, .ab-grid, .vs {
-                grid-template-columns: 1fr;
+/* ============================================================
+           DEDICATED TABLET LAYOUT (744px to 1100px)
+           iPad mini 744x1133, iPad 768x1024, iPad 810x1080, iPad Air 820x1180,
+           iPad Pro 11 834x1194, iPad Pro 12.9 1024x1366, & Tablet Landscape
+           ============================================================ */
+        @media (min-width: 744px) and (max-width: 1100px) {
+            /* Smooth scrolling & header offset */
+            header.hero,
+            section.sec,
+            #home,
+            #about,
+            #facilities,
+            #reels,
+            #programs,
+            #memberships,
+            #trainers,
+            #contact,
+            #faq {
+                scroll-margin-top: 80px !important;
             }
-            .gl, .tks, .g3 {
-                grid-template-columns: repeat(2, 1fr);
+
+            /* Container padding 32px on tablet, max-width 100% */
+            .w {
+                padding-left: 32px !important;
+                padding-right: 32px !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
             }
-            .pg, .reels-grid {
-                grid-template-columns: repeat(2, 1fr);
+
+            /* Section spacing & Headings with clamp() */
+            .sec {
+                padding: clamp(54px, 7vw, 88px) 0 !important;
+                overflow: hidden !important;
+                max-width: 100% !important;
+            }
+            .sec-head {
+                margin-bottom: clamp(28px, 4vw, 44px) !important;
+            }
+            .sec-head h2 {
+                font-size: clamp(30px, 4.2vw, 44px) !important;
+                line-height: 1.15 !important;
+            }
+            .sec-head p {
+                font-size: clamp(15px, 1.8vw, 17px) !important;
+                max-width: 680px !important;
+            }
+
+            /* Hero full-height with 100dvh for iPad Safari toolbar */
+            .hero {
+                min-height: 100dvh !important;
+                height: auto !important;
+                padding-top: 110px !important;
+                padding-bottom: 60px !important;
+                overflow: hidden !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .hero-video-wrap {
+                overflow: hidden !important;
+                max-width: 100% !important;
+            }
+            .hero-video-bg {
+                max-width: 100% !important;
+                transform: none !important;
+            }
+            .hero-content {
+                max-width: 700px !important;
+                padding-bottom: 0 !important;
+            }
+            .hero h1 {
+                font-size: clamp(38px, 5.5vw, 56px) !important;
+                line-height: 1.1 !important;
+                margin-bottom: 16px !important;
+            }
+            .hero-content p {
+                font-size: clamp(16px, 2vw, 19px) !important;
+                line-height: 1.55 !important;
+                max-width: 620px !important;
+            }
+            .hero-actions, .hero .cta-group, .hero .btns {
+                display: flex !important;
+                flex-wrap: wrap !important;
+                gap: 14px !important;
+            }
+            .hero-actions .btn, .hero .btns .btn {
+                max-width: 100% !important;
+                flex: 0 1 auto !important;
             }
             .hero-stats {
-                grid-template-columns: repeat(2, 1fr);
+                display: grid !important;
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 14px !important;
+                margin-top: 36px !important;
             }
+            .hero-stat {
+                min-width: 0 !important;
+                padding: 16px 12px !important;
+            }
+            .hero-stat .val {
+                font-size: clamp(28px, 3.8vw, 36px) !important;
+            }
+
+            /* Hide marquee on tablet for zero-overflow performance */
+            .mq {
+                display: none !important;
+            }
+
+            /* Facilities 2-column grid on tablet portrait */
+            .gl {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+                overflow: visible !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                scroll-snap-type: none !important;
+                -webkit-overflow-scrolling: auto !important;
+            }
+            .card-fac {
+                min-width: 0 !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                aspect-ratio: 4 / 3 !important;
+                height: auto !important;
+                box-sizing: border-box !important;
+                transform: none !important;
+                opacity: 1 !important;
+            }
+            .card-fac-img {
+                width: 100% !important;
+                height: 100% !important;
+                border-radius: 14px !important;
+            }
+            .fac-dots {
+                display: none !important;
+            }
+
+            /* Reels 2-column grid */
+            .reels-grid {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+            }
+            .reel-card {
+                min-width: 0 !important;
+                width: 100% !important;
+                aspect-ratio: 9 / 16 !important;
+                max-height: 520px !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Programs 2-column grid */
+            #pg, .pg, .pcards {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+                overflow: visible !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                scroll-snap-type: none !important;
+                -webkit-overflow-scrolling: auto !important;
+            }
+            .pcard {
+                min-width: 0 !important;
+                width: 100% !important;
+                height: 380px !important;
+                box-sizing: border-box !important;
+            }
+            .pcard-in {
+                position: relative !important;
+                width: 100% !important;
+                height: 100% !important;
+                transform-style: preserve-3d !important;
+                -webkit-transform-style: preserve-3d !important;
+                transition: transform .6s cubic-bezier(.16, 1, .3, 1) !important;
+            }
+            .pface {
+                position: absolute !important;
+                inset: 0 !important;
+                backface-visibility: hidden !important;
+                -webkit-backface-visibility: hidden !important;
+                border-radius: 16px !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+            .pcard.is-flipped .pcard-in {
+                transform: rotateY(180deg) !important;
+            }
+            .prog-dots {
+                display: none !important;
+            }
+
+            /* Pricing Plans 2-column grid */
+            .tks {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+            }
+            .tks .tk {
+                display: flex !important;
+                min-width: 0 !important;
+                width: 100% !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                box-sizing: border-box !important;
+            }
+            .mobile-plan-tabs {
+                display: none !important;
+            }
+
+            /* Coaches 2-column grid */
+            .g3 {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+            }
+            .tr-card {
+                min-width: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            /* About & Features */
+            .ab-grid, .hg {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 28px !important;
+            }
+
+            /* Testimonials 2-column grid */
+            .vs {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 20px !important;
+            }
+            .q-card {
+                min-width: 0 !important;
+                width: 100% !important;
+                display: flex !important;
+                box-sizing: border-box !important;
+            }
+            .mobile-quote-dots {
+                display: none !important;
+            }
+
+            /* Contact */
+            .cg, .contact-grid {
+                display: grid !important;
+                grid-template-columns: 1fr !important;
+                gap: 28px !important;
+            }
+
+            /* Footer */
             footer .w {
-                grid-template-columns: 1fr 1fr;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 32px !important;
+            }
+            footer details.ft-acc summary .ft-chevron {
+                display: none !important;
+            }
+
+            /* Fixed elements & Safe Areas on Tablet */
+            .fab-whatsapp {
+                position: fixed !important;
+                bottom: max(28px, env(safe-area-inset-bottom, 28px)) !important;
+                right: 28px !important;
+                z-index: 90 !important;
+            }
+            .bottom-action-bar {
+                display: none !important;
+            }
+            body {
+                padding-bottom: 0 !important;
+            }
+
+            /* Cursor cleanup */
+            * {
+                cursor: auto !important;
+            }
+            .custom-cursor, .cursor-dot, .cursor-ring {
+                display: none !important;
+                pointer-events: none !important;
             }
         }
-
         
         /* Mobile-only elements (completely hidden on desktop >= 769px) */
         .mobile-sheet,
@@ -2262,9 +2542,9 @@
         }
 
 
-        @media (max-width: 768px) {
+        @media (max-width: 743px) {
             /* Touch & mobile cursor cleanup */
-        @media (hover: none), (pointer: coarse), (max-width: 768px) {
+        @media (hover: none), (pointer: coarse), (max-width: 1100px) {
             * {
                 cursor: auto !important;
             }
@@ -3696,14 +3976,15 @@
 
         
         /* ============================================================
-           REBUILT RESPONSIVE NAVBAR & MOBILE NAVIGATION (768px BREAKPOINT)
+           REBUILT RESPONSIVE NAVBAR & NAVIGATION SYSTEM
+           Desktop: 1101px and above (full horizontal links)
+           Tablet & Mobile: 1100px and below (logo, login button, hamburger + drawer)
            ============================================================ */
         html.nav-locked, body.nav-locked {
             overflow: hidden !important;
             touch-action: none !important;
         }
 
-        /* Fixed navbar clearance for smooth navigation */
         html {
             scroll-behavior: smooth;
         }
@@ -3722,10 +4003,9 @@
         }
 
         /* ------------------------------------------------------------
-           DESKTOP NAVBAR (769px and above)
-           100% Identical to original desktop layout
+           DESKTOP NAVBAR (1101px and above)
            ------------------------------------------------------------ */
-        @media (min-width: 769px) {
+        @media (min-width: 1101px) {
             nav#mainNav,
             nav.navbar {
                 display: flex !important;
@@ -3748,7 +4028,7 @@
                 width: 100% !important;
                 max-width: 1220px !important;
                 margin: 0 auto !important;
-                padding: 0 24px !important;
+                padding: 0 clamp(16px, 2vw, 24px) !important;
                 display: flex !important;
                 align-items: center !important;
                 justify-content: space-between !important;
@@ -3762,27 +4042,30 @@
                 background: none !important;
                 border: none !important;
                 cursor: pointer !important;
+                flex-shrink: 0 !important;
             }
             nav#mainNav .lk,
             nav.navbar .lk {
                 display: flex !important;
                 align-items: center !important;
-                gap: 28px !important;
+                gap: clamp(10px, 1.6vw, 24px) !important;
             }
             nav#mainNav .lk a,
             nav.navbar .lk a {
-                font-size: 15px !important;
+                font-size: clamp(13px, 1.1vw, 15px) !important;
                 font-weight: 600 !important;
                 color: var(--text-muted) !important;
                 transition: color 0.2s ease !important;
                 cursor: pointer !important;
+                white-space: nowrap !important;
             }
             nav#mainNav .lk a:hover,
             nav.navbar .lk a:hover {
                 color: var(--gold-dark) !important;
             }
             nav#mainNav .bg,
-            nav.navbar .bg {
+            nav.navbar .bg,
+            .nav-actions {
                 display: none !important;
             }
             .nav-overlay,
@@ -3792,10 +4075,9 @@
         }
 
         /* ------------------------------------------------------------
-           MOBILE NAVBAR & DRAWER (768px and below)
-           Clean, full-width, hamburger + drawer
+           TABLET & MOBILE NAVBAR & DRAWER (1100px and below)
            ------------------------------------------------------------ */
-        @media (max-width: 768px) {
+        @media (max-width: 1100px) {
             header.hero,
             section.sec,
             #home,
@@ -3810,7 +4092,6 @@
                 scroll-margin-top: 74px !important;
             }
 
-            /* Main Header Bar on Mobile */
             nav#mainNav,
             nav.navbar {
                 display: flex !important;
@@ -3819,14 +4100,14 @@
                 left: 0 !important;
                 right: 0 !important;
                 width: 100% !important;
-                max-width: 100vw !important;
-                height: 64px !important;
+                max-width: 100% !important;
+                height: 68px !important;
                 z-index: 100 !important;
-                padding: env(safe-area-inset-top, 0px) 16px 0 !important;
+                padding: env(safe-area-inset-top, 0px) clamp(16px, 3vw, 32px) 0 !important;
                 align-items: center !important;
                 justify-content: space-between !important;
                 box-sizing: border-box !important;
-                background: linear-gradient(180deg, rgba(13, 15, 20, 0.92) 0%, rgba(13, 15, 20, 0.6) 70%, transparent 100%) !important;
+                background: linear-gradient(180deg, rgba(13, 15, 20, 0.94) 0%, rgba(13, 15, 20, 0.6) 70%, transparent 100%) !important;
                 border-bottom: 1px solid transparent !important;
                 transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease !important;
             }
@@ -3839,7 +4120,6 @@
                 box-shadow: 0 2px 14px rgba(27, 24, 18, 0.06) !important;
             }
 
-            /* Container takes 100% of header bar */
             nav#mainNav .w,
             nav.navbar .w {
                 display: flex !important;
@@ -3852,7 +4132,6 @@
                 box-sizing: border-box !important;
             }
 
-            /* Logo: Visible & crisp on left */
             nav#mainNav .lg,
             nav.navbar .lg {
                 display: flex !important;
@@ -3888,25 +4167,38 @@
                 color: #edb71e !important;
                 text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
             }
-            nav#mainNav.scrolled .lg span small,
-            nav.navbar.scrolled .lg span small {
-                color: #b89a5a !important;
-                text-shadow: none !important;
-            }
 
-            /* Hide Desktop Links Completely */
+            /* Hide horizontal links list on tablet/mobile */
             nav#mainNav .lk,
             nav.navbar .lk,
             nav .lk,
-            .lk {
+            #lk {
                 display: none !important;
             }
 
-            /* Visible Hamburger Button on right */
+            /* Right-side action container */
+            .nav-actions {
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
+                flex-shrink: 0 !important;
+            }
+            .nav-actions .btn {
+                display: inline-flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                height: 38px !important;
+                padding: 0 18px !important;
+                font-size: 14px !important;
+                font-weight: 700 !important;
+                border-radius: 999px !important;
+                background: var(--gold) !important;
+                color: #111 !important;
+                border: none !important;
+            }
+
             nav#mainNav .bg,
-            nav.navbar .bg,
-            nav .bg,
-            .bg {
+            nav.navbar .bg {
                 display: flex !important;
                 flex-direction: column !important;
                 justify-content: center !important;
@@ -3914,72 +4206,61 @@
                 gap: 5px !important;
                 width: 44px !important;
                 height: 44px !important;
-                min-width: 44px !important;
-                min-height: 44px !important;
-                background: rgba(255, 255, 255, 0.15) !important;
-                backdrop-filter: blur(8px) !important;
-                -webkit-backdrop-filter: blur(8px) !important;
-                border: 1px solid rgba(255, 255, 255, 0.35) !important;
-                border-radius: 8px !important;
+                background: rgba(255, 255, 255, 0.12) !important;
+                border: 1px solid rgba(255, 255, 255, 0.2) !important;
+                border-radius: 10px !important;
                 cursor: pointer !important;
                 padding: 0 !important;
-                color: #ffffff !important;
-                transition: all 0.3s ease !important;
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
                 flex-shrink: 0 !important;
+                transition: background 0.2s ease, border-color 0.2s ease !important;
             }
             nav#mainNav.scrolled .bg,
             nav.navbar.scrolled .bg {
-                background: rgba(27, 24, 18, 0.05) !important;
-                border-color: #e2d9c6 !important;
-                color: #1b1812 !important;
-                box-shadow: none !important;
+                background: #ffffff !important;
+                border: 1px solid #d5cbba !important;
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05) !important;
             }
             nav#mainNav .bg i,
-            nav.navbar .bg i,
-            nav .bg i,
-            .bg i {
+            nav.navbar .bg i {
                 display: block !important;
-                width: 22px !important;
+                width: 20px !important;
                 height: 2px !important;
-                background: currentColor !important;
+                background: #ffffff !important;
                 border-radius: 2px !important;
-                transition: transform 0.3s ease, opacity 0.3s ease !important;
+                transition: transform 0.25s ease, opacity 0.25s ease, background 0.2s ease !important;
+            }
+            nav#mainNav.scrolled .bg i,
+            nav.navbar.scrolled .bg i {
+                background: #111827 !important;
             }
             nav#mainNav .bg.on i:first-child,
-            nav.navbar .bg.on i:first-child,
-            nav .bg.on i:first-child,
-            .bg.on i:first-child {
+            nav.navbar .bg.on i:first-child {
                 transform: translateY(3.5px) rotate(45deg) !important;
             }
             nav#mainNav .bg.on i:last-child,
-            nav.navbar .bg.on i:last-child,
-            nav .bg.on i:last-child,
-            .bg.on i:last-child {
+            nav.navbar .bg.on i:last-child {
                 transform: translateY(-3.5px) rotate(-45deg) !important;
             }
 
-            /* Backdrop Overlay */
             .nav-overlay {
-                display: block;
-                position: fixed;
-                inset: 0;
-                z-index: 140;
-                background: rgba(0, 0, 0, 0.72);
-                backdrop-filter: blur(4px);
-                -webkit-backdrop-filter: blur(4px);
-                opacity: 0;
-                visibility: hidden;
-                pointer-events: none;
-                transition: opacity 0.3s ease, visibility 0.3s ease;
+                display: block !important;
+                position: fixed !important;
+                inset: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                background: rgba(0, 0, 0, 0.65) !important;
+                backdrop-filter: blur(4px) !important;
+                -webkit-backdrop-filter: blur(4px) !important;
+                z-index: 140 !important;
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transition: opacity 0.3s ease, visibility 0.3s ease !important;
             }
             .nav-overlay.on {
-                opacity: 1;
-                visibility: visible;
-                pointer-events: auto;
+                opacity: 1 !important;
+                visibility: visible !important;
             }
 
-            /* Fullscreen Mobile Drawer Sheet */
             .mobile-sheet {
                 display: flex !important;
                 position: fixed !important;
@@ -4004,8 +4285,6 @@
                 visibility: visible !important;
                 transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
             }
-
-            /* Drawer Close Button */
             .mobile-sheet-close {
                 align-self: flex-end !important;
                 width: 44px !important;
@@ -4021,100 +4300,42 @@
                 justify-content: center !important;
                 margin-bottom: 8px !important;
             }
-
-            /* Mobile Navigation Links Container (Vertical Stack) */
             .mobile-sheet-nav,
             #mobileSheetNav {
                 position: static !important;
                 width: 100% !important;
+                max-width: 480px !important;
                 height: auto !important;
                 display: flex !important;
                 flex-direction: column !important;
-                margin: auto 0 !important;
+                margin: auto auto !important;
                 background: none !important;
                 border: none !important;
                 padding: 0 !important;
                 box-sizing: border-box !important;
                 box-shadow: none !important;
             }
-
-            /* Individual Mobile Nav Links */
             .mobile-sheet-nav a,
             #mobileSheetNav a {
                 display: flex !important;
                 align-items: center !important;
-                font-family: 'Barlow Condensed', sans-serif !important;
-                font-size: 26px !important;
-                font-weight: 600 !important;
+                justify-content: space-between !important;
+                padding: 14px 16px !important;
+                font: 700 17px 'Barlow Condensed', sans-serif !important;
+                letter-spacing: 0.05em !important;
                 text-transform: uppercase !important;
-                letter-spacing: 0.04em !important;
-                padding: 12px 0 !important;
                 color: #f6f1e6 !important;
-                text-decoration: none !important;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-                min-height: 48px !important;
-                box-sizing: border-box !important;
-                transition: color 0.2s ease, padding-left 0.2s ease !important;
+                transition: color 0.2s ease, background 0.2s ease !important;
             }
             .mobile-sheet-nav a:hover,
-            .mobile-sheet-nav a:active,
-            #mobileSheetNav a:hover,
-            #mobileSheetNav a:active {
-                color: var(--gold) !important;
-                padding-left: 8px !important;
-            }
-
-            /* Mobile Viewport Width: Full width, no narrow box */
-            html, body {
-                width: 100% !important;
-                max-width: 100vw !important;
-                overflow-x: hidden !important;
-                margin: 0 !important;
-                padding-left: 0 !important;
-                padding-right: 0 !important;
-            }
-            .w {
-                width: 100% !important;
-                max-width: 100% !important;
-                padding-left: 16px !important;
-                padding-right: 16px !important;
-                box-sizing: border-box !important;
-            }
-            header.hero {
-                width: 100% !important;
-                max-width: 100vw !important;
-                box-sizing: border-box !important;
+            .mobile-sheet-nav a:active {
+                color: #edb71e !important;
+                background: rgba(237, 183, 30, 0.08) !important;
             }
         }
-    </style>
-</head>
-
-<body>
-
-    <!-- SVG Icon Sprite with Logo Colors -->
-    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-        <symbol id="mk" viewBox="0 0 100 100">
-            <g fill="none" stroke-width="7">
-                <circle cx="50" cy="50" r="44" stroke="var(--logo-dark, #111827)" />
-                <path d="M50 6A44 44 0 0 1 94 50" stroke="#edb71e" />
-                <path d="M50 94A44 44 0 0 1 14 72" stroke="#edb71e" />
-                <path d="M29 71V31L46 56L63 31V71" stroke="var(--logo-dark, #111827)" stroke-linejoin="miter" />
-                <path d="M58 63H82" stroke="#edb71e" />
-            </g>
-        </symbol>
-    </svg>
-
-    <!-- Preloader -->
-    <div id="pre" aria-hidden="true">
-        <div class="loader-box">
-            <svg viewBox="0 0 100 100">
-                <use href="#mk" />
-            </svg>
-            <p>MG WINNER FITNESS</p>
-        </div>
-    </div>
-
-    <!-- Navigation Bar -->
+        
+        <!-- Navigation Bar -->
     <nav id="mainNav" class="navbar">
         <div class="w">
             <button class="lg" data-go="home" aria-label="MG Winner Fitness home">
@@ -4126,7 +4347,10 @@
                     <small>FITNESS CLUB</small>
                 </span>
             </button>
-            <button class="bg" id="bg" aria-label="Toggle navigation menu"><i></i><i></i></button>
+            <div class="nav-actions">
+                <button class="btn sm" data-login>Login</button>
+                <button class="bg" id="bg" aria-label="Toggle navigation menu"><i></i><i></i></button>
+            </div>
             <div class="lk" id="lk">
                 <a data-go="home">Home</a>
                 <a data-go="about">About</a>
@@ -4882,7 +5106,7 @@
         </div>
     </footer>
     <script>
-        if (window.innerWidth > 768) {
+        if (window.innerWidth >= 744) {
             document.querySelectorAll('footer details.ft-acc').forEach(function(d) { d.setAttribute('open', ''); });
         }
     </script>
@@ -5895,7 +6119,7 @@
                             e.stopPropagation();
                             return;
                         }
-                        if (window.innerWidth <= 768 && lightbox && lightboxImg) {
+                        if (window.innerWidth < 744 && lightbox && lightboxImg) {
                             const img = card.querySelector('img');
                             const h3 = card.querySelector('h3');
                             if (img) lightboxImg.src = img.src;
@@ -5940,7 +6164,7 @@
             function startQuoteTimer() {
                 clearInterval(quoteTimer);
                 quoteTimer = setInterval(() => {
-                    if (window.innerWidth <= 768) {
+                    if (window.innerWidth < 744) {
                         showQuote(quoteIdx + 1);
                     }
                 }, 6000);
