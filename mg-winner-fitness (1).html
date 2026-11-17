@@ -1070,7 +1070,7 @@
         }
 
         /* Programs Grid */
-        .pg, .pcards {
+                .pg, .pcards {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 22px;
@@ -1081,6 +1081,7 @@
             -webkit-perspective: 1000px;
             height: 380px;
             cursor: pointer;
+            position: relative;
         }
 
         .pcard-in, .fc > div {
@@ -1090,38 +1091,86 @@
             transform-style: preserve-3d;
             -webkit-transform-style: preserve-3d;
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            border-radius: var(--radius-lg);
         }
 
         @media (hover: hover) and (pointer: fine) {
             .pcard:hover .pcard-in, .fc:hover > div {
                 transform: rotateY(180deg);
             }
+            .pcard:hover .pfront {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transition: opacity 0s 0.3s, visibility 0s 0.3s !important;
+            }
+            .pcard:hover .pback {
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
         }
+
         .pcard.is-flipped .pcard-in, .fc.on > div, .fc.flipped > div {
             transform: rotateY(180deg);
+        }
+
+        /* Midpoint opacity safety net: prevents ANY front-face leakage on iOS */
+        .pfront {
+            transition: opacity 0s 0.3s;
+            opacity: 1;
+            transform: translateZ(0);
+            -webkit-transform: translateZ(0);
+        }
+        .pcard.is-flipped .pfront, .fc.on > div .f, .fc.flipped > div .f {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: opacity 0s 0.3s, visibility 0s 0.3s !important;
+        }
+        .pback {
+            opacity: 0 !important;
+            visibility: hidden !important;
+            transition: opacity 0s 0.3s, visibility 0s 0.3s !important;
+            transform: rotateY(180deg) translateZ(0);
+            -webkit-transform: rotateY(180deg) translateZ(0);
+        }
+        .pcard.is-flipped .pback, .fc.on > div .bk, .fc.flipped > div .bk {
+            opacity: 1 !important;
+            visibility: visible !important;
+        }
+
+        .pface, .pface *, .fc .f, .fc .bk, .fc .f *, .fc .bk * {
+            -webkit-backface-visibility: hidden !important;
+            backface-visibility: hidden !important;
         }
 
         .pface, .fc .f, .fc .bk {
             position: absolute;
             inset: 0;
-            backface-visibility: hidden;
-            -webkit-backface-visibility: hidden;
-            border-radius: var(--radius-lg);
+            border-radius: var(--radius-lg, 16px);
             overflow: hidden;
-            border: 1px solid var(--border);
-            padding: 26px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: var(--shadow-sm);
             box-sizing: border-box;
         }
 
+        /* FRONT FACE */
         .pfront, .fc .f {
-            background: #ffffff;
+            background: #111111;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-sm);
         }
         .pfront * {
+            pointer-events: none;
+            will-change: auto !important;
+        }
+
+        /* Soft dark gradient overlay instead of CSS filter for iOS 3D context safety */
+        .pfront::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0.85) 100%);
+            z-index: 1;
             pointer-events: none;
         }
 
@@ -1131,20 +1180,14 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            filter: brightness(0.45) contrast(1.05);
             z-index: 0;
-            transition: transform 0.6s ease;
-        }
-
-        @media (hover: hover) and (pointer: fine) {
-            .pcard:hover .pfront img.pp, .fc:hover .f .pp {
-                transform: scale(1.08);
-            }
+            filter: none !important;
+            -webkit-filter: none !important;
         }
 
         .pfront .f-content, .fc .f .f-content {
             position: relative;
-            z-index: 1;
+            z-index: 2;
             height: 100%;
             display: flex;
             flex-direction: column;
@@ -1153,8 +1196,8 @@
         }
 
         .pfront .n, .fc .f .n {
-            font: 800 20px 'Barlow Condensed', sans-serif;
-            color: #111;
+            font: 800 18px 'Barlow Condensed', sans-serif;
+            color: #111111;
             background: var(--gold);
             padding: 4px 12px;
             border-radius: 999px;
@@ -1162,43 +1205,76 @@
             box-shadow: var(--shadow-sm);
         }
 
-        .pfront .flip-hint {
-            display: none;
+        .pfront .flip-hint, .fc .f .flip-hint {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #f6f1e6;
+            background: rgba(17, 17, 17, 0.75) !important;
+            backdrop-filter: none !important;
+            -webkit-backdrop-filter: none !important;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            filter: none !important;
         }
 
         .pfront h3, .fc .f h3 {
-            font-size: 28px;
+            font-size: 24px;
             margin-bottom: 6px;
             color: #ffffff;
+            line-height: 1.2;
         }
 
         .pfront p.ds, .fc .f p.ds {
-            color: var(--gold-light);
+            color: var(--gold-light, #fcd34d);
             font-size: 14px;
             font-weight: 600;
+            margin: 0;
         }
 
+        /* BACK FACE - WHITE / LIGHT THEME */
         .pback, .fc .bk {
-            background: #ffffff;
-            transform: rotateY(180deg);
-            border-color: var(--border-gold);
-            justify-content: center;
-            text-align: center;
-            gap: 16px;
+            background: #ffffff !important;
+            border: 1px solid rgba(237, 183, 30, 0.35) !important;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
+            padding: 24px 20px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+            text-align: left !important;
+            justify-content: flex-start !important;
+            color: #1a1a1a !important;
         }
-        .pback a, .pback button {
-            pointer-events: auto;
+
+        .pback .pback-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
         }
 
         .pback h3, .fc .bk h3 {
-            font-size: 26px;
-            color: var(--gold-dark);
+            font-size: 22px !important;
+            font-weight: 700 !important;
+            color: #b45309 !important; /* Rich Dark Gold */
+            margin: 0 !important;
+            line-height: 1.25 !important;
         }
 
         .pback p, .fc .bk p {
-            color: var(--text-muted);
-            font-size: 15px;
-            line-height: 1.6;
+            color: #4b5563 !important; /* Neutral dark slate */
+            font-size: 14px !important;
+            line-height: 1.55 !important;
+            margin: 0 !important;
+        }
+
+        .pback .btn, .fc .bk .btn {
+            margin-top: auto !important;
+            width: 100% !important;
+            pointer-events: auto !important;
         }
 
         /* Membership Tickets */
@@ -2409,36 +2485,44 @@
                 grid-template-columns: repeat(2, 1fr) !important;
                 gap: 20px !important;
                 overflow: visible !important;
-                padding: 0 !important;
-                margin: 0 !important;
-                scroll-snap-type: none !important;
-                -webkit-overflow-scrolling: auto !important;
+                padding-bottom: 0 !important;
             }
             .pcard {
-                min-width: 0 !important;
-                width: 100% !important;
                 height: 380px !important;
-                box-sizing: border-box !important;
+                width: 100% !important;
+                min-width: 0 !important;
+                max-width: 100% !important;
+                flex: none !important;
             }
             .pcard-in {
-                position: relative !important;
-                width: 100% !important;
-                height: 100% !important;
                 transform-style: preserve-3d !important;
                 -webkit-transform-style: preserve-3d !important;
-                transition: transform .6s cubic-bezier(.16, 1, .3, 1) !important;
             }
-            .pface {
-                position: absolute !important;
-                inset: 0 !important;
+            .pface, .pface * {
                 backface-visibility: hidden !important;
                 -webkit-backface-visibility: hidden !important;
-                border-radius: 16px !important;
-                overflow: hidden !important;
-                box-sizing: border-box !important;
             }
             .pcard.is-flipped .pcard-in {
                 transform: rotateY(180deg) !important;
+            }
+            .pback {
+                background: #ffffff !important;
+                color: #1a1a1a !important;
+                padding: 24px 20px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 12px !important;
+                text-align: left !important;
+            }
+            .pback h3 {
+                color: #b45309 !important;
+            }
+            .pback p {
+                color: #4b5563 !important;
+            }
+            .pback .btn {
+                margin-top: auto !important;
+                width: 100% !important;
             }
             .prog-dots {
                 display: none !important;
@@ -3218,7 +3302,9 @@
             #pg, .pg, .pcards {
                 display: flex !important;
                 flex-direction: row !important;
+                flex-wrap: nowrap !important;
                 overflow-x: auto !important;
+                overflow-y: hidden !important;
                 scroll-snap-type: x mandatory !important;
                 -webkit-overflow-scrolling: touch !important;
                 overscroll-behavior-x: contain !important;
@@ -3266,16 +3352,44 @@
             .pcard.is-flipped .pcard-in, .fc.flipped > div, .fc.is-flipped > div, .fc.on > div {
                 transform: rotateY(180deg) !important;
             }
+
+            /* Midpoint opacity safety net: eliminates mirrored front-face leakage on iOS */
+            .pfront {
+                transition: opacity 0s 0.35s !important;
+                opacity: 1 !important;
+                transform: translateZ(0) !important;
+                -webkit-transform: translateZ(0) !important;
+            }
+            .pcard.is-flipped .pfront, .fc.flipped > div .f, .fc.is-flipped > div .f, .fc.on > div .f {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transition: opacity 0s 0.35s, visibility 0s 0.35s !important;
+            }
+            .pback {
+                opacity: 0 !important;
+                visibility: hidden !important;
+                transition: opacity 0s 0.35s, visibility 0s 0.35s !important;
+                transform: rotateY(180deg) translateZ(0) !important;
+                -webkit-transform: rotateY(180deg) translateZ(0) !important;
+            }
+            .pcard.is-flipped .pback, .fc.flipped > div .bk, .fc.is-flipped > div .bk, .fc.on > div .bk {
+                opacity: 1 !important;
+                visibility: visible !important;
+            }
+
+            .pface, .pface *, .fc .f, .fc .bk, .fc .f *, .fc .bk * {
+                backface-visibility: hidden !important;
+                -webkit-backface-visibility: hidden !important;
+            }
             .pface, .fc .f, .fc .bk {
                 position: absolute !important;
                 inset: 0 !important;
-                backface-visibility: hidden !important;
-                -webkit-backface-visibility: hidden !important;
                 border-radius: 16px !important;
                 overflow: hidden !important;
                 box-sizing: border-box !important;
             }
-            /* FRONT FACE */
+
+            /* FRONT FACE (Mobile) */
             .pfront, .fc .f {
                 display: block !important;
                 padding: 0 !important;
@@ -3297,6 +3411,7 @@
             }
             .pfront * {
                 pointer-events: none !important;
+                will-change: auto !important;
             }
             .pfront img.pp, .fc .f img.pp {
                 position: absolute !important;
@@ -3306,10 +3421,13 @@
                 min-width: 100% !important;
                 border-radius: 16px !important;
                 object-fit: cover !important;
-                filter: brightness(0.65) contrast(1.05) !important;
+                filter: none !important;
+                -webkit-filter: none !important;
                 z-index: 0 !important;
                 display: block !important;
                 margin: 0 !important;
+                transform: none !important;
+                transition: none !important;
             }
             .pfront .f-content, .fc .f .f-content {
                 position: relative !important;
@@ -3339,9 +3457,10 @@
                 font-size: 11px !important;
                 font-weight: 600 !important;
                 color: #f6f1e6 !important;
-                background: rgba(0, 0, 0, 0.45) !important;
-                backdrop-filter: blur(4px) !important;
-                -webkit-backdrop-filter: blur(4px) !important;
+                background: rgba(17, 17, 17, 0.78) !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                filter: none !important;
                 padding: 4px 9px !important;
                 border-radius: 999px !important;
                 border: 1px solid rgba(255, 255, 255, 0.25) !important;
@@ -3351,57 +3470,65 @@
                 font-weight: 700 !important;
                 color: #ffffff !important;
                 margin: 0 0 4px 0 !important;
-                text-shadow: 0 2px 4px rgba(0,0,0,0.6) !important;
+                line-height: 1.2 !important;
             }
             .pfront p.ds, .fc .f p.ds {
                 font-size: 13px !important;
                 color: #edb71e !important;
                 margin: 0 !important;
                 font-weight: 600 !important;
-                text-shadow: 0 1px 3px rgba(0,0,0,0.6) !important;
             }
-            /* BACK FACE */
+
+            /* BACK FACE - WHITE / LIGHT THEME (Mobile) */
             .pback, .fc .bk {
                 position: absolute !important;
                 inset: 0 !important;
-                background: #181512 !important;
-                border: 1px solid #b89a5a !important;
+                background: #ffffff !important;
+                border: 1px solid rgba(0, 0, 0, 0.08) !important;
+                box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06) !important;
                 border-radius: 16px !important;
-                padding: 22px 18px !important;
+                padding: 20px !important;
                 display: flex !important;
                 flex-direction: column !important;
-                justify-content: space-between !important;
-                text-align: center !important;
-                transform: rotateY(180deg) !important;
+                gap: 12px !important;
+                text-align: left !important;
+                justify-content: flex-start !important;
+                transform: rotateY(180deg) translateZ(0) !important;
+                -webkit-transform: rotateY(180deg) translateZ(0) !important;
                 backface-visibility: hidden !important;
                 -webkit-backface-visibility: hidden !important;
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
                 box-sizing: border-box !important;
                 max-height: none !important;
-                opacity: 1 !important;
-                color: #cfc7b2 !important;
+                color: #1a1a1a !important;
             }
             .pback a, .pback button, .fc .bk a, .fc .bk button {
                 pointer-events: auto !important;
+            }
+            .pback .pback-content {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+                flex: 1 !important;
             }
             .pback h3, .fc .bk h3 {
                 display: block !important;
                 font-size: 20px !important;
                 font-weight: 700 !important;
-                color: #edb71e !important;
-                margin: 0 0 8px 0 !important;
+                color: #b45309 !important;
+                margin: 0 !important;
+                line-height: 1.25 !important;
             }
             .pback p, .fc .bk p {
-                font-size: 15px !important;
-                line-height: 1.55 !important;
-                color: #cfc7b2 !important;
-                margin: 0 0 14px 0 !important;
-                flex: 1 !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
+                font-size: 14px !important;
+                line-height: 1.5 !important;
+                color: #4b5563 !important;
+                margin: 0 !important;
+                flex: none !important;
+                display: block !important;
+                text-align: left !important;
             }
             .pback .btn, .fc .bk .btn {
+                margin-top: auto !important;
                 width: 100% !important;
                 height: 44px !important;
                 border-radius: 10px !important;
@@ -5337,11 +5464,11 @@
                             </div>
                         </div>
                         <div class="pface pback">
-                            <div>
+                            <div class="pback-content">
                                 <h3>${p.title}</h3>
                                 <p>${p.desc}</p>
                             </div>
-                            <button type="button" class="btn sm" data-join="${p.title}">Enquire Now</button>
+                            <button type="button" class="btn" data-join="${p.title}" style="margin-top:auto; width:100%;">Enquire Now</button>
                         </div>
                     </div>
                 </article>
@@ -5956,28 +6083,48 @@
         // Guaranteed smooth zero-lag autoplay on desktop & mobile
         if (heroVid) {
             heroVid.muted = true;
+            heroVid.defaultMuted = true;
             heroVid.playsInline = true;
             heroVid.setAttribute('playsinline', '');
             heroVid.setAttribute('webkit-playsinline', '');
             heroVid.setAttribute('muted', '');
 
-            const playHeroVideo = () => {
-                if (heroVid.paused) {
-                    heroVid.muted = true;
-                    heroVid.play().catch(() => {});
-                }
+            const tryPlay = v => {
+                if (!v) return;
+                const p = v.play();
+                if (p && p.catch) p.catch(() => {});
             };
 
-            playHeroVideo();
+            tryPlay(heroVid);
 
-            ['click', 'touchstart', 'scroll', 'touchend'].forEach(evt => {
-                window.addEventListener(evt, playHeroVideo, { once: true, passive: true });
-            });
+            heroVid.addEventListener('loadeddata', () => tryPlay(heroVid));
+            heroVid.addEventListener('canplay', () => tryPlay(heroVid));
+            window.addEventListener('load', () => tryPlay(heroVid));
 
             document.addEventListener('visibilitychange', () => {
-                if (!document.hidden && heroVid.paused) playHeroVideo();
+                if (!document.hidden && heroVid.paused) {
+                    tryPlay(heroVid);
+                }
             });
-            window.addEventListener('pageshow', playHeroVideo);
+
+            // Low Power Mode / blocked autoplay fallback: first touchstart, pointerdown, click or scroll
+            ['touchstart', 'pointerdown', 'click', 'scroll'].forEach(evt => {
+                window.addEventListener(evt, () => tryPlay(heroVid), { once: true, passive: true });
+            });
+
+            // IntersectionObserver (threshold 0.4): play when visible, pause when off-screen
+            if ('IntersectionObserver' in window) {
+                const heroObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+                            tryPlay(heroVid);
+                        } else if (!entry.isIntersecting || entry.intersectionRatio < 0.2) {
+                            if (!heroVid.paused) heroVid.pause();
+                        }
+                    });
+                }, { threshold: [0.2, 0.4] });
+                heroObserver.observe(heroVid);
+            }
         }
 
     
