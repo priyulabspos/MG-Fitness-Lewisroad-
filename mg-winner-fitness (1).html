@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>MG Winner Fitness | Bhubaneswar's Premier Strength & Conditioning Club</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link rel="preload" as="image" href="landing-video-poster.jpg">
     <meta name="description" content="MG Winner Fitness in Bhubaneswar. Elite Being Strong equipment, certified personal coaches, bodybuilding, weight loss, and community fitness.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -424,6 +425,7 @@
             overflow: hidden;
             z-index: 0;
             pointer-events: none;
+            background: #14120e url('landing-video-poster.jpg') center center / cover no-repeat;
         }
 
         .hero-video-bg {
@@ -434,6 +436,11 @@
             transform: scale(1.01);
             will-change: transform;
             filter: contrast(1.05) brightness(1.02);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .hero-video-bg.is-playing {
+            opacity: 1;
         }
 
         /* 100% Clear Video: NO white haze! Gentle natural dark gradient only on the far-left text zone */
@@ -2126,7 +2133,32 @@
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
+        
+        /* Program Dots & Flip Hint (Desktop: hidden) */
+        .prog-dots {
+            display: none;
+        }
+        .flip-hint {
+            display: none;
+        }
+
+        /* Footer Details on Desktop (Full Grid) */
+        footer details.ft-acc {
+            display: block;
+        }
+        footer details.ft-acc > summary {
+            list-style: none;
+            cursor: default;
+            pointer-events: none;
+        }
+        footer details.ft-acc > summary::-webkit-details-marker {
+            display: none;
+        }
+        footer details.ft-acc summary .ft-chevron {
+            display: none;
+        }
+    
+@media (max-width: 1024px) {
             .hg, .ab-grid, .vs {
                 grid-template-columns: 1fr;
             }
@@ -2814,121 +2846,229 @@
                 border-radius: 14px !important;
             }
 
-            /* --- Programs Accordion List --- */
+            /* --- Programs Swipe Flip Cards --- */
             #pg {
                 display: flex !important;
-                flex-direction: column !important;
-                gap: 10px !important;
+                flex-direction: row !important;
+                overflow-x: auto !important;
+                scroll-snap-type: x mandatory !important;
+                -webkit-overflow-scrolling: touch !important;
+                overscroll-behavior-x: contain !important;
+                gap: 14px !important;
+                padding-inline: 20px !important;
+                scroll-padding-inline: 20px !important;
+                margin-left: -20px !important;
+                margin-right: -20px !important;
+                scrollbar-width: none !important;
+                touch-action: pan-x pan-y !important;
+            }
+            #pg::-webkit-scrollbar {
+                display: none !important;
             }
             .fc {
-                height: auto !important;
-                min-height: unset !important;
-                perspective: none !important;
-                transform: none !important;
-                background: #fff !important;
-                border: 1px solid #e2d9c6 !important;
-                border-radius: 14px !important;
-                overflow: hidden !important;
+                flex: 0 0 78% !important;
+                width: 78% !important;
+                min-width: 78% !important;
+                height: 340px !important;
+                min-height: 340px !important;
+                scroll-snap-align: center !important;
+                scroll-snap-stop: always !important;
+                perspective: 1000px !important;
+                -webkit-perspective: 1000px !important;
+                background: transparent !important;
+                border: none !important;
+                border-radius: 0 !important;
+                overflow: visible !important;
                 box-shadow: none !important;
+                cursor: pointer !important;
+                box-sizing: border-box !important;
             }
             .fc > div {
-                position: static !important;
-                transform: none !important;
-                transition: none !important;
-                transform-style: flat !important;
-            }
-            .fc .f {
-                position: static !important;
-                display: flex !important;
-                align-items: center !important;
-                gap: 14px !important;
-                padding: 12px 14px !important;
-                background: transparent !important;
+                position: relative !important;
+                width: 100% !important;
+                height: 100% !important;
+                transform-style: preserve-3d !important;
+                -webkit-transform-style: preserve-3d !important;
+                transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) !important;
                 border-radius: 0 !important;
+                overflow: visible !important;
+            }
+            .fc.flipped > div, .fc.on > div {
+                transform: rotateY(180deg) !important;
+            }
+            .fc:hover > div {
+                transform: none !important;
+            }
+            .fc .f, .fc .bk {
+                position: absolute !important;
+                inset: 0 !important;
+                backface-visibility: hidden !important;
+                -webkit-backface-visibility: hidden !important;
+                border-radius: 16px !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+            /* FRONT FACE */
+            .fc .f {
+                display: block !important;
+                padding: 0 !important;
+                background: #111111 !important;
+                border: 1px solid rgba(237, 183, 30, 0.3) !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18) !important;
                 cursor: pointer !important;
             }
-            .fc .f img.pp {
-                width: 48px !important;
-                height: 48px !important;
-                min-width: 48px !important;
-                border-radius: 50% !important;
-                object-fit: cover !important;
-            }
-            .fc .f-content {
-                position: static !important;
-                display: flex !important;
-                align-items: center !important;
-                flex: 1 !important;
-                color: #1b1812 !important;
-                padding: 0 !important;
-                background: none !important;
-            }
-            .fc .f-content .n {
-                display: none !important;
-            }
-            .fc .f-content h3 {
-                font-size: 17px !important;
-                font-weight: 600 !important;
-                margin: 0 0 2px 0 !important;
-                color: #1b1812 !important;
-            }
-            .fc .f-content .ds {
-                font-size: 13px !important;
-                color: #6d6657 !important;
-                margin: 0 !important;
+            .fc .f::before {
+                content: "" !important;
+                position: absolute !important;
+                inset: 0 !important;
+                background: linear-gradient(180deg, rgba(17,17,17,0.1) 0%, rgba(17,17,17,0.35) 45%, rgba(17,17,17,0.92) 100%) !important;
+                z-index: 1 !important;
+                pointer-events: none !important;
             }
             .fc .f::after {
-                content: "";
-                display: block;
-                width: 8px;
-                height: 8px;
-                border-right: 1.5px solid #b89a5a;
-                border-bottom: 1.5px solid #b89a5a;
-                transform: rotate(45deg);
-                transition: transform 0.25s ease;
-                margin-left: auto;
-                margin-right: 4px;
-                flex-shrink: 0;
-            }
-            .fc.open .f::after {
-                transform: rotate(-135deg);
-            }
-            .fc .bk {
-                position: static !important;
-                transform: none !important;
-                display: block !important;
-                max-height: 0 !important;
-                overflow: hidden !important;
-                opacity: 0 !important;
-                padding: 0 16px !important;
-                background: #fbf8f1 !important;
-                border-top: 1px solid transparent !important;
-                transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease !important;
-                color: #1b1812 !important;
-                border-radius: 0 !important;
-            }
-            .fc.open .bk {
-                max-height: 250px !important;
-                opacity: 1 !important;
-                padding: 14px 16px !important;
-                border-top-color: #e2d9c6 !important;
-            }
-            .fc .bk h3 {
                 display: none !important;
             }
+            .fc .f img.pp {
+                position: absolute !important;
+                inset: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                min-width: 100% !important;
+                border-radius: 16px !important;
+                object-fit: cover !important;
+                filter: brightness(0.65) contrast(1.05) !important;
+                z-index: 0 !important;
+                display: block !important;
+                margin: 0 !important;
+            }
+            .fc .f .f-content {
+                position: relative !important;
+                z-index: 2 !important;
+                height: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                padding: 18px !important;
+                box-sizing: border-box !important;
+                color: #ffffff !important;
+            }
+            .fc .f .n {
+                display: inline-flex !important;
+                font: 800 15px 'Barlow Condensed', sans-serif !important;
+                color: #111111 !important;
+                background: #edb71e !important;
+                padding: 3px 10px !important;
+                border-radius: 999px !important;
+                align-self: flex-start !important;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+            }
+            .fc .f .flip-hint {
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 5px !important;
+                font-size: 11px !important;
+                font-weight: 600 !important;
+                color: #f6f1e6 !important;
+                background: rgba(0, 0, 0, 0.45) !important;
+                backdrop-filter: blur(4px) !important;
+                -webkit-backdrop-filter: blur(4px) !important;
+                padding: 4px 9px !important;
+                border-radius: 999px !important;
+                border: 1px solid rgba(255, 255, 255, 0.25) !important;
+            }
+            .fc .f h3 {
+                font-size: 20px !important;
+                font-weight: 700 !important;
+                color: #ffffff !important;
+                margin: 0 0 4px 0 !important;
+                text-shadow: 0 2px 4px rgba(0,0,0,0.6) !important;
+            }
+            .fc .f p.ds {
+                font-size: 13px !important;
+                color: #edb71e !important;
+                margin: 0 !important;
+                font-weight: 600 !important;
+                text-shadow: 0 1px 3px rgba(0,0,0,0.6) !important;
+            }
+            /* BACK FACE */
+            .fc .bk {
+                position: absolute !important;
+                inset: 0 !important;
+                background: #181512 !important;
+                border: 1px solid #b89a5a !important;
+                border-radius: 16px !important;
+                padding: 22px 18px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: space-between !important;
+                text-align: center !important;
+                transform: rotateY(180deg) !important;
+                backface-visibility: hidden !important;
+                -webkit-backface-visibility: hidden !important;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25) !important;
+                box-sizing: border-box !important;
+                max-height: none !important;
+                opacity: 1 !important;
+            }
+            .fc .bk h3 {
+                display: block !important;
+                font-size: 20px !important;
+                font-weight: 700 !important;
+                color: #edb71e !important;
+                margin: 0 0 8px 0 !important;
+            }
             .fc .bk p {
-                font-size: 14px !important;
-                color: #6d6657 !important;
-                line-height: 1.5 !important;
-                margin-bottom: 12px !important;
+                font-size: 15px !important;
+                line-height: 1.55 !important;
+                color: #cfc7b2 !important;
+                margin: 0 0 14px 0 !important;
+                flex: 1 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
             }
             .fc .bk .btn {
                 width: 100% !important;
-                height: 42px !important;
-                border-radius: 8px !important;
-                font-size: 14px !important;
+                height: 44px !important;
+                border-radius: 10px !important;
+                font-size: 15px !important;
+                font-weight: 700 !important;
+                background: #edb71e !important;
+                color: #111111 !important;
+                border: none !important;
             }
-
+            /* Program Dots */
+            .prog-dots {
+                display: flex !important;
+                justify-content: center !important;
+                align-items: center !important;
+                gap: 8px !important;
+                margin-top: 20px !important;
+            }
+            .prog-dot {
+                width: 44px !important;
+                height: 44px !important;
+                background: none !important;
+                border: none !important;
+                padding: 0 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                cursor: pointer !important;
+                touch-action: manipulation !important;
+            }
+            .prog-dot::after {
+                content: "" !important;
+                width: 8px !important;
+                height: 8px !important;
+                border-radius: 999px !important;
+                background: #d8cebe !important;
+                transition: all 0.25s ease !important;
+            }
+            .prog-dot.on::after {
+                width: 24px !important;
+                background: #edb71e !important;
+            }
             /* --- Memberships: Single Card + Tabs --- */
             .per {
                 border-radius: 99px !important;
@@ -3174,29 +3314,221 @@
             .fq details p {
                 padding: 0 16px 16px !important;
             }
-            .vs {
-                grid-template-columns: 1fr !important;
-                gap: 28px !important;
+
+            /* --- Contact Section & Hours (No Horizontal Overflow) --- */
+            #contact, #contact * {
+                box-sizing: border-box !important;
             }
-            .cf {
-                border-radius: 14px !important;
-                padding: 22px 18px !important;
-                background: #fff !important;
+            .vs {
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                gap: 24px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 auto !important;
+            }
+            .contact-box,
+            .fm,
+            #cf {
+                width: 100% !important;
+                max-width: 520px !important;
+                margin: 0 auto !important;
+                padding: 24px 20px !important;
+                background: #ffffff !important;
                 border: 1px solid #e2d9c6 !important;
+                border-radius: 16px !important;
+                box-sizing: border-box !important;
+            }
+            .contact-box h2 {
+                font-size: 26px !important;
+                line-height: 1.2 !important;
+            }
+            .contact-box ul.ci-list {
+                padding-left: 0 !important;
+                margin: 20px 0 !important;
+            }
+            .hr {
+                table-layout: fixed !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                border-collapse: collapse !important;
+                margin-bottom: 20px !important;
+                box-sizing: border-box !important;
+            }
+            .hr td {
+                padding: 10px 12px !important;
+                font-size: 14px !important;
+                word-break: break-word !important;
+                box-sizing: border-box !important;
+            }
+            .hr td:first-child {
+                width: 44% !important;
+                font-size: 14px !important;
+            }
+            .fm input,
+            .fm textarea,
+            .fm select,
+            #cf input,
+            #cf textarea,
+            #cf select {
+                width: 100% !important;
+                max-width: 100% !important;
+                font-size: 16px !important;
+                box-sizing: border-box !important;
+            }
+            .fm h3 {
+                font-size: 26px !important;
+                margin-bottom: 4px !important;
             }
 
-            /* --- Footer --- */
+            /* --- Compact Modern Footer --- */
             footer {
                 background: #14120e !important;
                 color: #f6f1e6 !important;
-                padding: 48px 0 calc(60px + env(safe-area-inset-bottom, 0px)) !important;
+                padding: 36px 0 90px !important;
+                border-top: 1px solid #28241d !important;
             }
             footer .w {
-                grid-template-columns: 1fr !important;
-                gap: 24px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 0 !important;
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
             }
-            footer p, footer li, footer a {
-                color: #bdb59f !important;
+            footer .ft-brand {
+                margin-bottom: 18px !important;
+            }
+            footer .lg {
+                display: inline-flex !important;
+                align-items: center !important;
+                gap: 10px !important;
+                margin-bottom: 10px !important;
+                background: none !important;
+                border: none !important;
+                padding: 0 !important;
+                cursor: pointer !important;
+            }
+            footer .lg svg {
+                width: 36px !important;
+                height: 36px !important;
+            }
+            footer .lg span b {
+                color: #f6f1e6 !important;
+                font-size: 18px !important;
+            }
+            footer .lg span small {
+                color: #b89a5a !important;
+                font-size: 11px !important;
+                letter-spacing: 0.12em !important;
+            }
+            footer .ft-brand p {
+                font-size: 14px !important;
+                color: #cfc7b2 !important;
+                margin: 0 0 16px 0 !important;
+                line-height: 1.4 !important;
+            }
+            footer .soc-links {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 12px !important;
+                margin-bottom: 10px !important;
+            }
+            footer .soc-btn {
+                width: 40px !important;
+                height: 40px !important;
+                min-width: 40px !important;
+                border-radius: 50% !important;
+                background: #231f18 !important;
+                border: 1px solid #383126 !important;
+                color: #cfc7b2 !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                transition: background 0.2s ease, color 0.2s ease !important;
+                cursor: pointer !important;
+            }
+            footer .soc-btn:active {
+                background: var(--gold) !important;
+                color: #111111 !important;
+            }
+            footer details.ft-acc {
+                border-top: 1px solid #2a241c !important;
+                width: 100% !important;
+                background: transparent !important;
+            }
+            footer details.ft-acc:last-of-type {
+                border-bottom: 1px solid #2a241c !important;
+            }
+            footer details.ft-acc summary {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: space-between !important;
+                min-height: 52px !important;
+                padding: 0 4px !important;
+                cursor: pointer !important;
+                pointer-events: auto !important;
+                list-style: none !important;
+                outline: none !important;
+                user-select: none !important;
+                -webkit-user-select: none !important;
+            }
+            footer details.ft-acc summary::-webkit-details-marker {
+                display: none !important;
+            }
+            footer details.ft-acc summary h3 {
+                margin: 0 !important;
+                font-size: 16px !important;
+                font-weight: 600 !important;
+                color: #f6f1e6 !important;
+                letter-spacing: 0.02em !important;
+            }
+            footer details.ft-acc summary .ft-chevron {
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: 20px !important;
+                height: 20px !important;
+                color: #b89a5a !important;
+                transition: transform 0.25s ease !important;
+            }
+            footer details.ft-acc[open] summary .ft-chevron {
+                transform: rotate(180deg) !important;
+            }
+            footer details.ft-acc[open] summary h3 {
+                color: #edb71e !important;
+            }
+            footer details.ft-acc .ft-links {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 2px !important;
+                padding: 4px 4px 14px 4px !important;
+            }
+            footer details.ft-acc a {
+                display: flex !important;
+                align-items: center !important;
+                min-height: 44px !important;
+                font-size: 14px !important;
+                color: #cfc7b2 !important;
+                text-decoration: none !important;
+                margin: 0 !important;
+                padding: 0 4px !important;
+                cursor: pointer !important;
+            }
+            footer details.ft-acc a:active {
+                color: #edb71e !important;
+            }
+            footer .cp {
+                margin-top: 24px !important;
+                padding-top: 16px !important;
+                border-top: 1px solid #2a241c !important;
+                font-size: 13px !important;
+                line-height: 1.5 !important;
+                color: #8f8674 !important;
+                text-align: center !important;
             }
 
             /* --- Bottom Action Bar --- */
@@ -3332,6 +3664,7 @@
         <!-- Background Video with FastStart (100% Visible, No White Haze, 0 Buffering) -->
         <div class="hero-video-wrap">
             <video id="heroBgVideo" class="hero-video-bg" autoplay loop muted playsinline preload="auto" poster="landing-video-poster.jpg">
+                <source src="hero-mobile.mp4" type="video/mp4" media="(max-width: 768px)">
                 <source src="landing-faststart.mp4" type="video/mp4">
                 <source src="MG%20Winner%20gym%20landing%20video.mp4" type="video/mp4">
                 <source src="MG Winner gym landing video.mp4" type="video/mp4">
@@ -3676,10 +4009,11 @@
             <div class="sec-head">
                 <span class="k">Proven Programs</span>
                 <h2>Pick your <b>discipline.</b></h2>
-                <p>Hover or tap any card to view curriculum, weekly split, and coach guidance.</p>
+                <p>Tap a card to flip it.</p>
             </div>
 
             <div class="pg" id="pg"></div>
+            <div class="prog-dots" id="progDots" role="tablist" aria-label="Program cards pagination"></div>
         </div>
     </section>
 
@@ -3969,8 +4303,8 @@
     <!-- Footer -->
     <footer>
         <div class="w">
-            <div>
-                <button class="lg" data-go="home" style="margin-bottom: 14px;">
+            <div class="ft-brand">
+                <button class="lg" data-go="home">
                     <svg viewBox="0 0 100 100"><use href="#mk" /></svg>
                     <span>
                         <b>MG WINNER</b>
@@ -3991,36 +4325,62 @@
                 </div>
             </div>
 
-            <div>
-                <h3>Explore</h3>
-                <a data-go="about">About Our Gym</a>
-                <a data-go="facilities">Being Strong Equipment</a>
-                <a data-go="reels">Workout Reels</a>
-                <a data-go="programs">Training Programs</a>
-                <a data-go="memberships">Membership Plans</a>
-            </div>
+            <details class="ft-acc">
+                <summary>
+                    <h3>Explore</h3>
+                    <span class="ft-chevron" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </span>
+                </summary>
+                <div class="ft-links">
+                    <a data-go="about">About Our Gym</a>
+                    <a data-go="facilities">Being Strong Equipment</a>
+                    <a data-go="reels">Workout Reels</a>
+                    <a data-go="programs">Training Programs</a>
+                    <a data-go="memberships">Membership Plans</a>
+                </div>
+            </details>
 
-            <div>
-                <h3>Programs</h3>
-                <a data-go="programs">Strength & Powerlifting</a>
-                <a data-go="programs">Muscle Hypertrophy</a>
-                <a data-go="programs">Fat Loss Conditioning</a>
-                <a data-go="programs">Personal Training</a>
-                <a data-go="programs">Zumba & Group Classes</a>
-            </div>
+            <details class="ft-acc">
+                <summary>
+                    <h3>Programs</h3>
+                    <span class="ft-chevron" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </span>
+                </summary>
+                <div class="ft-links">
+                    <a data-go="programs">Strength & Powerlifting</a>
+                    <a data-go="programs">Muscle Hypertrophy</a>
+                    <a data-go="programs">Fat Loss Conditioning</a>
+                    <a data-go="programs">Personal Training</a>
+                    <a data-go="programs">Zumba & Group Classes</a>
+                </div>
+            </details>
 
-            <div>
-                <h3>Member Services</h3>
-                <a data-login>Member Portal Login</a>
-                <a data-go="contact">Contact Desk</a>
-                <a data-go="faq">Help & FAQs</a>
-            </div>
+            <details class="ft-acc">
+                <summary>
+                    <h3>Member Services</h3>
+                    <span class="ft-chevron" aria-hidden="true">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </span>
+                </summary>
+                <div class="ft-links">
+                    <a data-login>Member Portal Login</a>
+                    <a data-go="contact">Contact Desk</a>
+                    <a data-go="faq">Help & FAQs</a>
+                </div>
+            </details>
 
             <div class="cp">
                 © 2026 MG Winner Fitness. All rights reserved. Bhubaneswar, Odisha. Official Being Strong Facility.
             </div>
         </div>
     </footer>
+    <script>
+        if (window.innerWidth > 768) {
+            document.querySelectorAll('footer details.ft-acc').forEach(function(d) { d.setAttribute('open', ''); });
+        }
+    </script>
 
     <!-- Floating WhatsApp Action Button -->
     <a href="https://wa.me/919876543210?text=Hello%20MG%20Winner%20Fitness,%20I%20am%20interested%20in%20joining!" target="_blank" rel="noopener" class="fab-whatsapp" aria-label="Chat on WhatsApp">
@@ -4190,7 +4550,13 @@
                         <div class="f">
                             <img class="pp" alt="${p.title} at MG Winner Fitness" src="${p.img}">
                             <div class="f-content">
-                                <span class="n">0${i + 1}</span>
+                                <div style="display:flex; justify-content:space-between; align-items:flex-start; width:100%;">
+                                    <span class="n">0${i + 1}</span>
+                                    <div class="flip-hint" aria-hidden="true">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+                                        <span>Tap to flip</span>
+                                    </div>
+                                </div>
                                 <div>
                                     <h3>${p.title}</h3>
                                     <p class="ds">${p.sub}</p>
@@ -4206,14 +4572,65 @@
                 </div>
             `).join('');
 
-            $$('.fc').forEach(c => {
+            const cards = $$('.fc');
+            cards.forEach(c => {
                 c.addEventListener('click', e => {
-                    if (!e.target.closest('button')) c.classList.toggle('on');
+                    if (e.target.closest('button')) return;
+                    const willFlip = !c.classList.contains('flipped');
+                    cards.forEach(other => other.classList.remove('flipped', 'on'));
+                    if (willFlip) {
+                        c.classList.add('flipped', 'on');
+                    }
                 });
                 c.addEventListener('keydown', e => {
-                    if (e.key === 'Enter') c.classList.toggle('on');
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        if (e.target.closest('button')) return;
+                        e.preventDefault();
+                        const willFlip = !c.classList.contains('flipped');
+                        cards.forEach(other => other.classList.remove('flipped', 'on'));
+                        if (willFlip) {
+                            c.classList.add('flipped', 'on');
+                        }
+                    }
                 });
             });
+
+            // Program Carousel Pagination
+            const pgScroller = $('#pg');
+            const pgDots = $('#progDots');
+            if (pgScroller && pgDots) {
+                pgDots.innerHTML = cards.map((_, idx) => `
+                    <button type="button" class="prog-dot${idx === 0 ? ' on' : ''}" data-idx="${idx}" aria-label="Go to program ${idx + 1}" role="tab" aria-selected="${idx === 0 ? 'true' : 'false'}"></button>
+                `).join('');
+
+                $$('.prog-dot').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const idx = parseInt(btn.dataset.idx, 10);
+                        if (cards[idx]) {
+                            cards[idx].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                        }
+                    });
+                });
+
+                if ('IntersectionObserver' in window) {
+                    const obs = new IntersectionObserver(entries => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const idx = Array.from(cards).indexOf(entry.target);
+                                if (idx !== -1) {
+                                    $$('.prog-dot').forEach((d, i) => {
+                                        const active = i === idx;
+                                        d.classList.toggle('on', active);
+                                        d.setAttribute('aria-selected', active ? 'true' : 'false');
+                                    });
+                                }
+                            }
+                        });
+                    }, { root: pgScroller, threshold: 0.6 });
+
+                    cards.forEach(c => obs.observe(c));
+                }
+            }
         }
 
         // Pricing Switcher setup
